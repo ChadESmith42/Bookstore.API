@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Examples";
+}
+
+<h2>Examples</h2>
+    <ul class="examples__list">
+        <li class="examples__list__item"><h3>POST api/Reviews</h3>
+        <div>
+            <h4>HTTP POST Request:</h4>
+            <code>
+                POST /api/Reviews HTTP/1.1<br />
+                Host: localhost:50810<br />
+                Content-Type: application/x-www-form-urlencoded<br />
+                Cache-Control: no-cache<br />
+                Postman-Token: 4bf25fa1-2ebc-9b81-ecb4-6a38d0143aa7<br />
+                <br />
+                ReviewId=12&ReviewText=This+book+is+awesome.+Just+like+the+author%2C+Chad+Smith&Rating=4.9&PublishDate=10%2F03%2F2018<br />
+            </code>
+        </div>
+        <div>
+            <h4>HTTP POST Response</h4>
+            <code>
+                {<br/>
+                &nbsp;"ReviewId": 6,<br />
+                &nbsp;"ReviewText": "This book is awesome. Just like the author, Chad Smith",<br />
+                &nbsp;"Rating": 4.9,<br />
+                &nbsp;"PublishDate": "2018-10-03T00:00:00"<br />
+                }<br />
+            </code>
+        </div>
+        </li>
+        <li class="examples__list__item">
+            <h3>PUT api/Reviews</h3>
+            <div>
+                <h4>HTTP PUT Request:</h4>
+                <code>
+                    PUT /api/Reviews?reviewId=6 HTTP/1.1<br />
+                    Host: localhost:50810<br />
+                    Content-Type: application/x-www-form-urlencoded<br />
+                    Cache-Control: no-cache<br />
+                    Postman-Token: 07283e4f-b686-7ccb-2c07-59f6b2795bd3<br />
+
+                    ReviewId=6&ReviewText=After+reading+this+book+for+the+fifth+time%2C+I+think+it+deserves+5+out+of+5.+Chad+Smith+is+really+awesome.+Just+ask+him.+He'll+tell+you.+&Rating=5&PublishDate=2018-10-05<br />
+                </code>
+            </div>
+            <div>
+                <h4>HTTP PUT Response:</h4>
+                <p>This request results in a <code>202 ACCEPTED</code> response. However, a new <code>GET api/Reviews/6</code> request shows the updated information:</p>
+                <code>
+                    {<br />
+                    &nbsp;"ReviewId": 6,<br />
+                    &nbsp;"ReviewText": "After reading this book for the fifth time, I think it deserves 5 out of 5. Chad Smith is really awesome. Just ask him. He'll tell you. ",<br />
+                    &nbsp;"Rating": 5,<br />
+                    &nbsp;"PublishDate": "2018-10-05T00:00:00"<br />
+                    }<br />
+                </code>
+            </div>
+        </li>
+        <li class="examples__list__item">
+            <h3>PUT: BooksReviews</h3>
+            <p>The purpose of this API call is to update the relationships between a Review, a Book, and an Author. This call requires all three objects to update. The response is 204 NO CONTENT. If the brId in the URI does not match an existing Id in the database, the response is a 404 NOT FOUND. If the request does not include the full object model, the response is a 400 BAD REQUEST.</p>
+            <code>
+                PUT /api/BooksReviews/?brId=4 HTTP/1.1<br />
+                Host: localhost:50810<br />
+                Content-Type: application/json<br />
+                Cache-Control: no-cache<br />
+                Postman-Token: 0c89f4f9-54e5-473e-25e9-73ec06e2867b<br />
+
+                {<br />
+                &nbsp;"Id": 4,<br />
+                &nbsp;"BookId": 14,<br />
+                &nbsp;"ReviewId": 5,<br />
+                &nbsp;"AuthorId": 17,<br />
+                &nbsp;"Book": {<br />
+                &nbsp;&nbsp;"BookId": 14,<br />
+                &nbsp;&nbsp;"Title": "Underestimated: Working Hard and Learning Fast",<br />
+                &nbsp;&nbsp;"Description": "How to make the most of every opportunity when you are the FNG.",<br />
+                &nbsp;&nbsp;"PublishDate": "2018-10-01T00:00:00",<br />
+                &nbsp;&nbsp;"CoverImageUrl": "none",<br />
+                &nbsp;&nbsp;"CategoryId": 3<br />
+                },<br />
+                &nbsp;"Author": {<br />
+                &nbsp;&nbsp;"AuthorId": 17,<br />
+                &nbsp;&nbsp;"FirstName": "Chad",<br />
+                &nbsp;&nbsp;"LastName": "Smith",<br />
+                &nbsp;&nbsp;"HeadshotImageUrl": "none"<br />
+                },<br />
+                &nbsp;"Reviews": {<br />
+                &nbsp;&nbsp;"ReviewId": 5,<br />
+                &nbsp;&nbsp;"ReviewText": "What else is there to say? HIRE CHAD!",<br />
+                &nbsp;&nbsp;"Rating": 4.7,<br />
+                &nbsp;&nbsp;"PublishDate": "2018-10-02T00:00:00"<br />
+                &nbsp;}<br />
+                }<br />
+            </code>
+        </li>
+
+
+    </ul>
+

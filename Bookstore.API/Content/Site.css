@@ -1,0 +1,78 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-size: !important 18px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.body-content {
+    margin-top: 40px;
+}
+
+.headline {
+    background-color: #EB6864;
+    color: black;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 15px;
+    border-radius: 10px;
+}
+
+    .headline h2 {
+        font-weight: bold;
+        font-size: 200% !important;
+    }
+
+    .headline p {
+        font-size: 125%;
+    }
+
+.featured .content-wrapper p a {
+    padding: 10px 12px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+    .featured .content-wrapper p a:hover {
+        background-color: lightgray;
+        color: black;
+        border: solid 2px black;
+        padding: 8px 10px;
+    }
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.plain__link,
+.plain__link:hover,
+.plain__link:visited,
+.plain__link.active {
+    text-decoration: none;
+}
+
+
+.examples__list__item {
+    list-style: none;
+    padding: 10px 40px;
+    padding-bottom: 30px;
+    border-radius: 20px;
+    width: 100%;
+    min-height: 40px;
+    overflow-wrap: break-word;
+}
+
+    .examples__list__item:hover {
+        background-color: #d3d3d8;
+    }

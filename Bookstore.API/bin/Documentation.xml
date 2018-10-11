@@ -1,0 +1,1030 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Bookstore.API</name>
+    </assembly>
+    <members>
+        <member name="M:Bookstore.API.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForMediaType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Sets the sample directly for all actions with the specified media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.GetModelDescriptionGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the model description generator.
+            </summary>
+            <param name="config">The configuration.</param>
+            <returns>The <see cref="T:Bookstore.API.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator"/></returns>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.ModelDescriptions.ModelDescription">
+            <summary>
+            Describes a type model.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator">
+            <summary>
+            Generates model descriptions for given types.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.ModelDescriptions.ModelNameAttribute">
+            <summary>
+            Use this attribute to change the name of the <see cref="T:Bookstore.API.Areas.HelpPage.ModelDescriptions.ModelDescription"/> generated for a type.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.UriParameters">
+            <summary>
+            Gets or sets the <see cref="T:Bookstore.API.Areas.HelpPage.ModelDescriptions.ParameterDescription"/> collection that describes the URI parameters for the API.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.RequestDocumentation">
+            <summary>
+            Gets or sets the documentation for the request.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.RequestModelDescription">
+            <summary>
+            Gets or sets the <see cref="T:Bookstore.API.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the request body.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.RequestBodyParameters">
+            <summary>
+            Gets the request body parameter descriptions.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.ResourceDescription">
+            <summary>
+            Gets or sets the <see cref="T:Bookstore.API.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the resource.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.ResourceProperties">
+            <summary>
+            Gets the resource property descriptions.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories">
+            <summary>
+            Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
+            stopping when the factory successfully returns a non-<see langref="null"/> object.
+            </summary>
+            <remarks>
+            Collection includes just <see cref="M:Bookstore.API.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)"/> initially. Use
+            <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
+            <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,Bookstore.API.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,Bookstore.API.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create
+            one using <see cref="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.DefaultSampleObjectFactory(Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator,System.Type)"/> (which wraps an <see cref="T:Bookstore.API.Areas.HelpPage.ObjectGenerator"/>) and other
+            factories in <see cref="P:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.ResolveHttpRequestMessageType(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Resolves the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The type.</returns>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},Bookstore.API.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Creates a new <see cref="T:Bookstore.API.Areas.HelpPage.HelpPageSampleKey"/> based on media type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:Bookstore.API.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.#ctor(Bookstore.API.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:Bookstore.API.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,Bookstore.API.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:Bookstore.API.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:Bookstore.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bookstore.API.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bookstore.API.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:Bookstore.API.Controllers.AuthorsController">
+            <summary>
+            Author Details
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Controllers.AuthorsController.Get">
+            <summary>
+            Get a list of all Authors objects in the database.
+            </summary>
+            <returns>List of all Authors in the database.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.AuthorsController.Get(System.Int32)">
+            <summary>
+            Get the details for a specific Author by unique identifier.
+            </summary>
+            <param name="authorId">Unique identifier for the Author record.</param>
+            <returns>Returns a single Author object. NOTE: If the {id} provided does not exist in the database, returns a 404 Not Found response.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.AuthorsController.PostAuthor(Bookstore.API.Models.Author)">
+            <summary>
+            Create a new Author by providing a valid Author object
+            </summary>
+            <param name="author">A complete Authors object.</param>
+            <returns>Returns 400 BAD REQUEST if the Authors object is not valid. Returns a 201 CREATED with specifics of the object if successful.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.AuthorsController.PutAuthor(System.Int32,Bookstore.API.Models.Author)">
+            <summary>
+            Update an Author using authorId and an Author object. NOTE: You cannot create a new Author object with this method.
+            </summary>
+            <param name="authorId">Unique identifier of the Author in the database.</param>
+            <param name="author">A complete Author object.</param>
+            <returns>Returns 404 NOT FOUND for invalid authorId parameters. Returns a 400 BAD REQUEST for invalid Author objects. Returns a 202 ACCEPTED response if successfull.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.AuthorsController.DeleteAuthor(System.Int32)">
+            <summary>
+            Removes a single Authors object from the database.
+            </summary>
+            <param name="removeId">Unique identifier of the Author object to be removed.</param>
+            <returns>Returns a 404 NOT FOUND response if the removeId parameter does not match an existing Authors object. Returns a 200 OK response with the details of the removed author object if successful.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.AuthorsController.GetAuthorRating(System.Int32)">
+            <summary>
+            Get an Authors Book Review Stats. NOTE: This covers all books by an Author, not just one book.
+            </summary>
+            <param name="authorId">Unique identifier for the Author.</param>
+            <returns>If the Author is not in the database, returns a 404 NOT FOUND. Returns a 200 OK with an AuthorRating object if successful.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.AuthorsController.AuthorRanking">
+            <summary>
+            Get the Authors ranked by their Reviews. (Minimum of 4 reviews are required.)
+            </summary>
+            <example>api/AuthorsRankings/</example>
+            <returns>Returns 200 OK with list of Authors ordered by Ranking in descending order. List is then ordered by Author's Last Name, and First Name alphabetically.</returns>
+        </member>
+        <member name="T:Bookstore.API.Controllers.BooksController">
+            <summary>
+            Supported queries for Books within the AMC Bookstore. Don't see what you need? Contact us!
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.GetBooks">
+            <summary>
+            Get a list of all books in the database.
+            </summary>
+            <returns>Returns all Books in the database.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.GetBook(System.Int32)">
+            <summary>
+            Get a single book based on the unique identifier for that book.
+            </summary>
+            <param name="bookId">Id of the Book in the database.</param>
+            <returns>Returns a single Book object filtered by the Id in the query. Returns a 404 NOT FOUND if the Book object does not exist in the database.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.GetBookByTitle(System.String)">
+            <summary>
+            Get a list of books that contain the search term in the title.
+            </summary>
+            <param name="title">Title to query against all Book titles.</param>
+            <returns>Returns a list of Book objects filtered by the value provided. The title variable acts as a wildcard. List is alphabetized by title.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.GetBookByCategory(System.String)">
+            <summary>
+            Get a list of books based on category name.
+            </summary>
+            <param name="category">Category name to query against all Book categories.</param>
+            <returns>Returns a list of Book objects filtered by the String in the query. List is alphabetized by book title.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.GetBookByAuthor(System.String,System.String)">
+            <summary>
+            Get a list of books based on the author's first name and last name. NOTE: This query uses both an EQUAL and CONTAINS method. "Jon Smith" will return BOTH "Jon Smith" and "Jonathan Smithers."
+            </summary>
+            <param name="firstName">Author first name to query against all Book titles.</param>
+            <param name="lastName">Author last name to query against all Book titles.</param>
+            <returns>Returns a list of Book objects filtered by the String in the query. List is alphabetized by Title, then Author name.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.GetBooksByDate(System.DateTime)">
+            <summary>
+            Query Books object by Publication Date.
+            </summary>
+            <param name="pubDate">Publication date of the Books object. Valid date formats are yyyy-mm-dd or yyyy/mm/dd.</param>
+            <returns>Returns list of Books objects published on the query data. Returns 404 NOT FOUND if no Books objects were published on that date. Returns 400 BAD REQUEST if the pubDate value is not properly formatted.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.GetBookRating(System.Int32)">
+            <summary>
+            Get Book Rating using bookId
+            </summary>
+            <param name="bookId">Unique Identifier for Book object.</param>
+            <returns>Returns a 404 NOT FOUND if bookId is not valid. Returns a 204 NO CONTENT if there are no reviews of the Book. Returns a 200 OK with an AuthorStats object if successful.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.PutTitle(System.Int32,Bookstore.API.Models.Book)">
+            <summary>
+            Edit an existing Book object. NOTE: You cannot create a new Book object using this method.
+            </summary>
+            <param name="id">Id of the Book in the database.</param>
+            <param name="book">Name of the Book in the database.</param>
+            <returns>Returns a 400 if the model is invalid. Returns a 400 Bad Request if the id is invalid. Returns a 204 No Content if successful. Returns a 404 Not Found if the id does not already exist in the database.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.PostBooks(Bookstore.API.Models.Book)">
+            <summary>
+            Creates a new Book object in the database.
+            </summary>
+            <param name="book">A complete Book object.</param>
+            <returns>Returns complete Book object created by POST request.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.DeleteBook(System.Int32)">
+            <summary>
+            Delete a Book by unique identifier.
+            </summary>
+            <param name="id">Unique identifier for the book, as an int.</param>
+        </member>
+        <member name="T:Bookstore.API.Controllers.BooksReviewsController">
+            <summary>
+            Supported queries for BooksReviews within the AMC Bookstore. These queries show the relationship between a specific Reviews object and the corresponding Books and Authors objects.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksReviewsController.GetBooksReviews">
+            <summary>
+            GET List of all BookReview objects. These are the relationships between Books, Reviews, and Authors. Links are established through unique identifiers for each object.
+            </summary>
+            <returns>Returns list of all BookReview objects.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksReviewsController.GetBooksReviews(System.Int32)">
+            <summary>
+            GET: Single BookReview object by Id.
+            </summary>
+            <param name="bookreviewId">Unique identifier for the BookReview object.</param>
+            <returns>Returns 200 OK with full Authors, Books, Reviews, and BooksReviews object. Returns 404 NOT FOUND if brId does not exist in the database.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksReviewsController.PutBooksReview(System.Int32,Bookstore.API.Models.BookReview)">
+            <summary>
+            Update a Review using the ReviewId (brId) and a full BooksReviews object.
+            </summary>
+            <param name="bookreviewId">Unique identifier for the BookReviews relationships.</param>
+            <param name="booksReview">Fully qualified BooksReviews object.</param>
+            <returns>Returns 400 BAD REQUEST for invalid BooksReviews objects. Returns 400 BAD REQUEST if the brId and booksReview.Id do not match. Returns a 404 NOT FOUND if the brId does not match an existing BooksReview. Returns 204 NO CONTENT if PUT is successful.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksReviewsController.Delete(System.Int32)">
+            <summary>
+            DELETE: Remove a BookReviw object from the database.
+            </summary>
+            <param name="bookreviewId">Unique identifier for the BookReview object.</param>
+            <return></return>
+        </member>
+        <member name="T:Bookstore.API.Controllers.CategoriesController">
+            <summary>
+            Supported queries for the Categories of Books within the AMC Bookstore.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Controllers.CategoriesController.Get">
+            <summary>
+            GET: api/Categories
+            </summary>
+            <returns>List of all Categories</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.CategoriesController.Get(System.Int32)">
+            <summary>
+            Get Category information by unique identifier.
+            </summary>
+            <param name="categoryID">Unique identifier for each category.</param>
+            <returns>Returns a single Category object. NOTE: If the Category does not exist in the database, you will receive a 404 NOT FOUND response.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.CategoriesController.GetBooksByCategory(System.Int32)">
+            <summary>
+            Select all books within a Category
+            </summary>
+            <param name="bookInCategory">Unique identifier for the Category.</param>
+            <returns>Returns a list of Books based on the Category queried. NOTE: You will receive a 404 NOT FOUND response if the Category does not exist.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.CategoriesController.GetBookCount(System.Int32)">
+            <summary>
+            Get the count of all books within a Category.
+            </summary>
+            <param name="countCategory">Unique identifier of the Category.</param>
+            <returns>Returns an integer that represents the count of all books within the Category.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.CategoriesController.Post(Bookstore.API.Models.Category)">
+            <summary>
+            Create a new Category by providing a valid Category object.
+            </summary>
+            <param name="value">A valid Category object.</param>
+            <returns>Returns a 201 CREATED response if successful. Returns a 400 BAD REQUEST response if Category object is not valid. Returns a 400 BAD REQUEST if the Category object already exists.</returns>
+        </member>
+        <member name="T:Bookstore.API.Controllers.ReviewsController">
+            <summary>
+            Supported queries for the Reviews objects within the AMC Bookstore.
+            </summary>
+        </member>
+        <member name="M:Bookstore.API.Controllers.ReviewsController.GetReviews">
+            <summary>
+            GET All Book Reviews from database.
+            </summary>
+            <returns>Returns a list of Book Reviews.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.ReviewsController.GetReviewById(System.Int32)">
+            <summary>
+            Get a single Review by ReviewId
+            </summary>
+            <param name="reviewId">Unique identifier for Review objects.</param>
+            <returns>Returns a 200 OK response with the requested Review. Returns a 404 NOT FOUND response if the Review does not exist.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.ReviewsController.GetReviewsByDate(System.DateTime)">
+            <summary>
+            Query Reviews object by Publication Date.
+            </summary>
+            <param name="pubDate">Publication date of the Reviews object. Valid date formats are yyyy-mm-dd or yyyy/mm/dd.</param>
+            <returns>Returns list of Reviews objects published on the query data. Returns 404 NOT FOUND if no Reviews objects were published on that date. Returns 400 BAD REQUEST if the reviewDate value is not properly formatted.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.ReviewsController.PostReview(Bookstore.API.Models.Review)">
+            <summary>
+            Create a new Review by providing a valid Review object
+            </summary>
+            <param name="review">A complete Review object.</param>
+            <returns>Returns 400 BAD REQUEST if the Reviews object is not valid. Returns a 201 CREATED with specifics of the object if successful.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.ReviewsController.PutReview(System.Int32,Bookstore.API.Models.Review)">
+            <summary>
+            Update a Review using ReviewId and a Review object. NOTE: You cannot create a new Review object with this method.
+            </summary>
+            <param name="reviewId">Unique identifier of the Review in the database.</param>
+            <param name="review">A complete Review object.</param>
+            <returns>Returns 404 NOT FOUND for invalid reviewId parameters. Returns a 400 BAD REQUEST for invalid Review objects. Returns a 202 ACCEPTED response if successfull.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.ReviewsController.DeleteReview(System.Int32)">
+            <summary>
+            Removes a single Reviews object from the database.
+            </summary>
+            <param name="removeId">Unique identifier of the Reviews object to be removed.</param>
+            <returns>Returns a 404 NOT FOUND response if the removeId parameter does not match an existing Reviewss object. Returns a 200 OK response with the details of the removed Reviews object if successful.</returns>
+        </member>
+        <member name="T:Bookstore.API.Models.Book">
+            <summary>
+            Book Model.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Book.BookId">
+            <summary>
+            Unique identifier for the Book.
+            </summary>
+            <example>5</example>
+        </member>
+        <member name="P:Bookstore.API.Models.Book.Title">
+            <summary>
+            Title of the Book.
+            </summary>
+            <example>Hire Chad: Making Great Business Decisions</example>
+        </member>
+        <member name="P:Bookstore.API.Models.Book.Description">
+            <summary>
+            Description of the Book content.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Book.PublishDate">
+            <summary>
+            Publication date for the Book.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Book.CoverImageUrl">
+            <summary>
+            URL for the cover image.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Book.CategoryId">
+            <summary>
+            Genre/Category for the Book, from the Categories Model.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Models.Category">
+            <summary>
+            Categories Model.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Category.CategoryId">
+            <summary>
+            Unique Identifier for the Category.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Category.Name">
+            <summary>
+            Name of the Category.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Models.Author">
+            <summary>
+            Author Modal
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Author.AuthorId">
+            <summary>
+            Unique Identifier for the Author.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Author.FirstName">
+            <summary>
+            First name of the Author.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Author.LastName">
+            <summary>
+            Last name of the Author.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Author.HeadshotImageUrl">
+            <summary>
+            Url for the Head Shot Image of the Author.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Models.Review">
+            <summary>
+            Book Reviews Model
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Review.ReviewId">
+            <summary>
+            Unique identifier for the Book Review.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Review.ReviewText">
+            <summary>
+            Text content of the Review.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Review.Rating">
+            <summary>
+            Review rating of the Book.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.Review.PublishDate">
+            <summary>
+            Publication date of the Review.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Models.AuthorRating">
+            <summary>
+            Author-Rating Model. Derives Average Rating and Total Reviews.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.AuthorRating.AuthorId">
+            <summary>
+            Unique identifier of the Author from the Author Model.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.AuthorRating.FirstName">
+            <summary>
+            First name of the Author from the Author Model.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.AuthorRating.LastName">
+            <summary>
+            Last name of the Author from the Author Model.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.AuthorRating.TotalReviews">
+            <summary>
+            Total number of Reviews from the Review Model.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.AuthorRating.AvgRating">
+            <summary>
+            Average Review rating from the Review Model.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Models.BookAuthor">
+            <summary>
+            Reference Table for Book and Authors (Many Authors-to-One Book)
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookAuthor.Id">
+            <summary>
+            Unique Identifier
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookAuthor.BookId">
+            <summary>
+            Book Unique Identifier
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookAuthor.AuthorId">
+            <summary>
+            Author Unique Identifier
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Models.BookReview">
+            <summary>
+            Reference Table for Book and Reviews (Many Reviews-to-One Book)
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookReview.Id">
+            <summary>
+            Unique Identifier
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookReview.BookId">
+            <summary>
+            Book Unique Identifier
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookReview.ReviewId">
+            <summary>
+            Review Unique Identifier
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookReview.AuthorId">
+            <summary>
+            Author Unique Identifier
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookReview.Book">
+            <summary>
+            Related Book information.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookReview.Author">
+            <summary>
+            Related Author information.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookReview.Reviews">
+            <summary>
+            Related BookReview information.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Models.AuthorRanking">
+            <summary>
+            Author Rankings based on Book Reviews. Minimum of 4 reviews is required.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.AuthorRanking.AuthorId">
+            <summary>
+            Unique identifier for Author, reflects the AuthorId in Authors
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.AuthorRanking.FirstName">
+            <summary>
+            Author's first name.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.AuthorRanking.LastName">
+            <summary>
+            Author's last name.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.AuthorRanking.AverageRating">
+            <summary>
+            Average rating for Author's Book Reviews. Minimum of 4 reviews is required.
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Models.BookCategoryRanking">
+            <summary>
+            Book and Category Rankings based on Book Reviews. Minimum of 4 reviews required.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookCategoryRanking.BookId">
+            <summary>
+            Unique Identifier for Book
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookCategoryRanking.Title">
+            <summary>
+            Book title from Book.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookCategoryRanking.PublishDate">
+            <summary>
+            Book publication data from Book.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookCategoryRanking.AverageRating">
+            <summary>
+            Average Rating of Book from Reviews. Minimum of 4 required.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookCategoryRanking.Category">
+            <summary>
+            Category from Book.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookCategoryRanking.FirstName">
+            <summary>
+            Author's first name from Authors.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookCategoryRanking.LastName">
+            <summary>
+            Author's last name from Authors.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.ApplicationDbContext.Books">
+            <summary>
+            Table of Books
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.ApplicationDbContext.Authors">
+            <summary>
+            Table of Authors
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.ApplicationDbContext.Categories">
+            <summary>
+            Table of Categories
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.ApplicationDbContext.Reviews">
+            <summary>
+            Table of Reviews
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.ApplicationDbContext.BooksAuthors">
+            <summary>
+            Reference Table of Books and Authors
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.ApplicationDbContext.BooksReviews">
+            <summary>
+            Reference Table of Books and Reviews
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.ApplicationDbContext.AuthorRankings">
+            <summary>
+            Reference Table of Authors Ranked by Review Ratings.
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.ApplicationDbContext.BookCategoryRankings">
+            <summary>
+            Reference Table of Books and Categories Ranked by Review Ratings.
+            </summary>
+        </member>
+    </members>
+</doc>
