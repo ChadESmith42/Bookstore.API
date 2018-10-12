@@ -26,7 +26,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <returns>Returns a list of Book Reviews.</returns>
         [Route("get")]
-        public IEnumerable<Review> GetReviews()
+        public IEnumerable<Reviews> GetReviews()
         {
             return db.Reviews;
         }//end GetReviews()
@@ -38,7 +38,7 @@ namespace Bookstore.API.Controllers
         /// <param name="reviewId">Unique identifier for Review objects.</param>
         /// <returns>Returns a 200 OK response with the requested Review. Returns a 404 NOT FOUND response if the Review does not exist.</returns>
         [Route("details/{reviewId:int}")]
-        [ResponseType(typeof(Review))]
+        [ResponseType(typeof(Reviews))]
         public IHttpActionResult GetReviewById(int reviewId)
         {
             if (ReviewExists(reviewId))
@@ -56,11 +56,11 @@ namespace Bookstore.API.Controllers
         /// <returns>Returns list of Reviews objects published on the query data. Returns 404 NOT FOUND if no Reviews objects were published on that date. Returns 400 BAD REQUEST if the reviewDate value is not properly formatted.</returns>
         [Route("date/{pubdate:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
         [Route("date/{*pubdate:datetime:regex(\\d{4}/\\d{2}/\\d{2})}")]
-        [ResponseType(typeof(List<Review>))]
+        [ResponseType(typeof(List<Reviews>))]
         public IHttpActionResult GetReviewsByDate(DateTime pubDate)
         {
 
-            List<Review> reviews = db.Reviews.Where(r => DbFunctions.TruncateTime(r.PublishDate) == DbFunctions.TruncateTime(pubDate)).ToList();
+            List<Reviews> reviews = db.Reviews.Where(r => DbFunctions.TruncateTime(r.PublishDate) == DbFunctions.TruncateTime(pubDate)).ToList();
 
             if (reviews.Count == 0)
             {
@@ -76,9 +76,9 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="review">A complete Review object.</param>
         /// <returns>Returns 400 BAD REQUEST if the Reviews object is not valid. Returns a 201 CREATED with specifics of the object if successful.</returns>
-        [ResponseType(typeof(Review))]
+        [ResponseType(typeof(Reviews))]
         [Route("create")]
-        public IHttpActionResult PostReview([FromBody]Review review)
+        public IHttpActionResult PostReview([FromBody]Reviews review)
         {
             if (!ModelState.IsValid)
             {
@@ -100,7 +100,7 @@ namespace Bookstore.API.Controllers
         /// <param name="review">A complete Review object.</param>
         /// <returns>Returns 404 NOT FOUND for invalid reviewId parameters. Returns a 400 BAD REQUEST for invalid Review objects. Returns a 202 ACCEPTED response if successfull.</returns>
         [Route("edit/{reviewId:int}")]
-        public IHttpActionResult PutReview(int reviewId, [FromBody] Review review)
+        public IHttpActionResult PutReview(int reviewId, [FromBody] Reviews review)
         {
             //Check if reviewId already exists: If not, return NotFound()
             if (!ReviewExists(reviewId))
@@ -127,7 +127,7 @@ namespace Bookstore.API.Controllers
         /// <param name="removeId">Unique identifier of the Reviews object to be removed.</param>
         /// <returns>Returns a 404 NOT FOUND response if the removeId parameter does not match an existing Reviewss object. Returns a 200 OK response with the details of the removed Reviews object if successful.</returns>
         [Route("delete/{removeId:int}")]
-        [ResponseType(typeof(Review))]
+        [ResponseType(typeof(Reviews))]
         public IHttpActionResult DeleteReview(int removeId)
         {
             if (!ReviewExists(removeId))
@@ -135,7 +135,7 @@ namespace Bookstore.API.Controllers
                 return NotFound();
             }
 
-            Review removeReview = db.Reviews.Find(removeId);
+            Reviews removeReview = db.Reviews.Find(removeId);
 
             db.Reviews.Remove(removeReview);
             db.SaveChanges();

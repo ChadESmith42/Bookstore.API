@@ -28,12 +28,12 @@ namespace Bookstore.API.Controllers
         /// <returns>Returns all Books in the database.</returns>
         [Route("get")]
         [HttpGet]
-        public IEnumerable<Book> GetBooks()
+        public IEnumerable<Books> GetBooks()
         {
-            List<Book> books = db.Books.ToList();
+            List<Books> books = db.Books.ToList();
 
             //Remove extra spaces from values:
-            foreach (Book book in books)
+            foreach (Books book in books)
             {
                 book.Title = book.Title.Trim();
                 book.Description = book.Description.Trim();
@@ -50,11 +50,11 @@ namespace Bookstore.API.Controllers
         /// <param name="bookId">Id of the Book in the database.</param>
         /// <returns>Returns a single Book object filtered by the Id in the query. Returns a 404 NOT FOUND if the Book object does not exist in the database.</returns>
         [Route("details/{bookId:int}")]
-        [ResponseType(typeof(Book))]
+        [ResponseType(typeof(Books))]
         [HttpGet]
         public IHttpActionResult GetBook(int bookId)
         {
-            Book book = db.Books.Find(bookId);
+            Books book = db.Books.Find(bookId);
             if (!BookExists(bookId))
             {
                 return NotFound();
@@ -75,7 +75,7 @@ namespace Bookstore.API.Controllers
         /// <returns>Returns a list of Book objects filtered by the value provided. The title variable acts as a wildcard. List is alphabetized by title.</returns>
         [Route("title/{title}")]
         [HttpGet]
-        [ResponseType(typeof(IEnumerable<Book>))]
+        [ResponseType(typeof(IEnumerable<Books>))]
         public IHttpActionResult GetBookByTitle(string title)
         {
             //Test query string for NULL values:
@@ -88,9 +88,9 @@ namespace Bookstore.API.Controllers
             string queryString = title.ToLower();
 
             //Create IEnumberable<Book> to capture results:            
-            IEnumerable<Book> books = db.Books.Where(b => b.Title.ToLower().Contains(queryString)).OrderBy(b => b.Title);
+            IEnumerable<Books> books = db.Books.Where(b => b.Title.ToLower().Contains(queryString)).OrderBy(b => b.Title);
 
-            foreach (Book book in books)
+            foreach (Books book in books)
             {
                 book.Title = book.Title.Trim();
                 book.CoverImageUrl = book.CoverImageUrl.Trim();
@@ -108,20 +108,20 @@ namespace Bookstore.API.Controllers
         /// <param name="category">Category name to query against all Book categories.</param>
         /// <returns>Returns a list of Book objects filtered by the String in the query. List is alphabetized by book title.</returns>
         [Route("category/{category}")]
-        [ResponseType(typeof(IEnumerable<Book>))]
+        [ResponseType(typeof(IEnumerable<Books>))]
         [HttpGet]
         public IHttpActionResult GetBookByCategory(string category)
         {
             string queryString = category.ToLower();
-            Category cat = db.Categories.Where(c => c.Name.ToLower().Trim() == queryString.Trim() || c.Name.ToLower().Trim().Contains(queryString)).FirstOrDefault();
+            Categories cat = db.Categories.Where(c => c.Name.ToLower().Trim() == queryString.Trim() || c.Name.ToLower().Trim().Contains(queryString)).FirstOrDefault();
 
             if (cat == null)
             {
                 return BadRequest($"No books found for Category {category}.");
             }
-            IEnumerable<Book> books = db.Books.Where(b => b.CategoryId == cat.CategoryId);
+            IEnumerable<Books> books = db.Books.Where(b => b.CategoryId == cat.CategoryId);
 
-            foreach (Book book in books)
+            foreach (Books book in books)
             {
                 book.Title = book.Title.Trim();
                 book.CoverImageUrl = book.CoverImageUrl.Trim();
@@ -131,34 +131,98 @@ namespace Bookstore.API.Controllers
             return Ok(books);
         }//end GetBookByCategory()
 
-        //POST: api/books/author
+        /// <summary>
+        /// GET List of books by AuthorId
+        /// </summary>
+        /// <param name="authorId">Unique identifier of the Author object.</param>
+        /// <returns>Returns a 200 OK with a list of Books objects. If no books are found, returns a 404 NOT FOUND.</returns>
+        [Route("author/details")]
+        [ResponseType(typeof(IEnumerable<Books>))]
+        public IHttpActionResult GetBookByAuthorId(int authorId)
+        {
+            IEnumerable<Books> books = from b in db.Books
+                                join ba in db.BooksAuthors on b.BookId equals ba.BookId
+                                where ba.AuthorId == authorId
+                                select b;
+            if (books.Count() > 0)
+            {
+                return Ok(books);
+            }
+
+            return NotFound();
+        }//end GetBookByAuthorId
+
+        //POST: api/books/author_name
         /// <summary>
         /// Get a list of books based on the author's first name and last name. NOTE: This query uses both an EQUAL and CONTAINS method. "Jon Smith" will return BOTH "Jon Smith" and "Jonathan Smithers."
         /// </summary>
-        /// <param name="firstName">Author first name to query against all Book titles.</param>
-        /// <param name="lastName">Author last name to query against all Book titles.</param>
+        ///// <param name="firstName">Author first name to query against all Book titles.</param>
+        ///// <param name="lastName">Author last name to query against all Book titles.</param>
         /// <returns>Returns a list of Book objects filtered by the String in the query. List is alphabetized by Title, then Author name.</returns>
-        [Route("author")]
-        [ResponseType(typeof(Book))]
-        public IHttpActionResult GetBookByAuthor([FromBody] string firstName,[FromBody] string lastName)
+        [Route("author_name")]
+        [HttpGet]
+        [ResponseType(typeof(Books))]
+        public IHttpActionResult GetBookByAuthorName(/*string firstName, string lastName*/)
         {
-            string fName = firstName.ToLower();
-            string lName = lastName.ToLower();
+            //string fName = firstName.ToLower();
+            //string lName = lastName.ToLower();
+            string fName = "Cha";
+            string lName = "Smi";
 
             if (fName.Length == 0 || lName.Length == 0)
             {
                 return NotFound();
             }
-            IEnumerable<Book> books = from b in db.Books
-                                       join ba in db.BooksAuthors on b.BookId equals ba.BookId
-                                       join a in db.Authors on ba.AuthorId equals a.AuthorId
-                                       where (a.FirstName.ToLower().Contains(fName) &&
-                                            a.LastName.ToLower().Contains(lName)) ||
-                                            (a.FirstName.ToLower().Equals(fName) && a.LastName.ToLower().Equals(lName))
-                                       orderby b.Title, a.LastName, a.FirstName
-                                       select b;
 
-            return Ok(books.ToList());
+            List<BookAuthors> bookauthors = db.BooksAuthors.Where(an => an.Author.FirstName.Contains(fName) || an.Author.LastName.Contains(lName)).ToList();
+            List<Books> books = new List<Books>();
+            foreach (BookAuthors book in bookauthors)
+            {
+                books.Add(book.Book);
+            }
+            #region Attempt to build Books list, queried by Author name wildcards, with FOREACH loops through list of Authors, then list BookAuthor objects.
+            ////Find authors that match the query:
+            //List<Author> authors = db.Authors
+            //        .Where(a => a.FirstName.Contains(fName.ToLower())
+            //                && a.LastName.Contains(lName.ToLower()))
+            //        .ToList();
+            ////Filter duplicates:
+            //authors = authors.Distinct().ToList();
+
+            ////Create an empty list to hold book/author relationships from table BookAuthor:
+            //List<BookAuthor> bookauthor = new List<BookAuthor>();
+
+            ////Cycle through the authors and get the responding BookAuthor objects:
+            //foreach (Author author in authors)
+            //{
+            //    IEnumerable<BookAuthor> ba = db.BooksAuthors.Where(a => a.AuthorId == author.AuthorId).ToList();
+            //    //Add the results to the empty list:
+            //    bookauthor.AddRange(ba);
+            //}
+            ////Create an empty list to hold book/author relationships from table BookAuthor:
+            //List<Book> books = new List<Book>();
+            ////Cycle through the bookauthors and get the response Book objects:
+            //foreach (BookAuthor book in bookauthor)
+            //{
+            //    IEnumerable<Book> booklist = db.Books.Where(b => b.BookId == book.BookId).ToList();
+            //    //Add the results to the empty list:
+            //    books.AddRange(booklist);
+            //}
+            ////Filter the books for duplicates:
+            //books = books.Distinct().ToList();
+            #endregion
+
+
+            #region LINQ attempt to build list of Books queried by Author name wildcards
+            //var books = from b in db.Books
+            //            join c in db.Categories on b.CategoryId equals c.CategoryId
+            //            join ba in db.BooksAuthors on b.BookId equals ba.BookId
+            //            join a in db.Authors on ba.AuthorId equals a.AuthorId
+            //            where a.FirstName.Contains(fName) && a.LastName.Contains(lName)
+            //            select new { b.Title, a.FirstName, a.LastName, b.Description, b.PublishDate, c.Name };
+            #endregion
+
+            return Ok(books);
 
         }//end GetBookByAuthor()
 
@@ -171,18 +235,18 @@ namespace Bookstore.API.Controllers
         [Route("date/{pubdate:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
         [Route("date/{*pubdate:datetime:regex(\\d{4}/\\d{2}/\\d{2})}")]
         [HttpGet]
-        [ResponseType(typeof(List<Book>))]
+        [ResponseType(typeof(List<Books>))]
         public IHttpActionResult GetBooksByDate(DateTime pubDate)
         {
 
-            List<Book> books = db.Books.Where(b => DbFunctions.TruncateTime(b.PublishDate) == DbFunctions.TruncateTime(pubDate)).ToList();
+            List<Books> books = db.Books.Where(b => DbFunctions.TruncateTime(b.PublishDate) == DbFunctions.TruncateTime(pubDate)).ToList();
 
             if (books.Count == 0)
             {
                 return NotFound();
             }
 
-            foreach (Book book in books)
+            foreach (Books book in books)
             {
                 book.Title = book.Title.Trim();
                 book.CoverImageUrl = book.CoverImageUrl.Trim();
@@ -199,7 +263,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="bookId">Unique Identifier for Book object.</param>
         /// <returns>Returns a 404 NOT FOUND if bookId is not valid. Returns a 204 NO CONTENT if there are no reviews of the Book. Returns a 200 OK with an AuthorStats object if successful.</returns>
-        [ResponseType(typeof(AuthorRating))]
+        [ResponseType(typeof(AuthorRatings))]
         [HttpGet]
         [Route("stats/{bookId}")]
         public IHttpActionResult GetBookRating(int bookId)
@@ -214,13 +278,13 @@ namespace Bookstore.API.Controllers
             {
                 return Ok(HttpStatusCode.NoContent);
             }
-            Book book = db.Books.Find(bookId);
+            Books book = db.Books.Find(bookId);
             var bookAuthor = from b in db.BooksAuthors
                              where b.BookId == bookId
                              select new { b.AuthorId };
-            Author author = db.Authors.Find(bookAuthor);
+            Authors author = db.Authors.Find(bookAuthor);
 
-            AuthorRating stats = new AuthorRating();
+            AuthorRatings stats = new AuthorRatings();
             stats.AuthorId = author.AuthorId;
             stats.FirstName = author.FirstName.Trim();
             stats.LastName = author.LastName.Trim();
@@ -250,7 +314,7 @@ namespace Bookstore.API.Controllers
         [ResponseType(typeof(void))]
         [HttpPut]
         [Route("edit/{id:int}")]
-        public IHttpActionResult PutTitle(int id, [FromBody] Book book)
+        public IHttpActionResult PutTitle(int id, [FromBody] Books book)
         {
             if (!ModelState.IsValid)
             {
@@ -290,10 +354,10 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="book">A complete Book object.</param>
         /// <returns>Returns complete Book object created by POST request.</returns>
-        [ResponseType(typeof(Book))]
+        [ResponseType(typeof(Books))]
         [Route("create")]
         [HttpPost]
-        public IHttpActionResult PostBooks(Book book)
+        public IHttpActionResult PostBooks(Books book)
         {
             if (!ModelState.IsValid)
             {
@@ -313,11 +377,11 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="id">Unique identifier for the book, as an int.</param>
         [Route("delete/{id:int}")]
-        [ResponseType(typeof(Book))]
+        [ResponseType(typeof(Books))]
         [HttpDelete]
         public IHttpActionResult DeleteBook(int id)
         {
-            Book book = db.Books.Find(id);
+            Books book = db.Books.Find(id);
             if (!BookExists(id))
             {
                 return NotFound();

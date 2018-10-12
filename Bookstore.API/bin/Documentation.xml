@@ -499,14 +499,22 @@
             <param name="authorId">Unique identifier for the Author record.</param>
             <returns>Returns a single Author object. NOTE: If the {id} provided does not exist in the database, returns a 404 Not Found response.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.AuthorsController.PostAuthor(Bookstore.API.Models.Author)">
+        <member name="M:Bookstore.API.Controllers.AuthorsController.AuthorByName(System.String,System.String)">
+            <summary>
+            GET: Find Authors by name search.
+            </summary>
+            <param name="fName">String contained in Author First Name.</param>
+            <param name="lName">String contained in Author Last Name.</param>
+            <returns>Returns a list of Authors whose names contain the search query. Both names must match. Returns 404 NOT FOUND if no Author names match the query.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.AuthorsController.PostAuthor(Bookstore.API.Models.Authors)">
             <summary>
             Create a new Author by providing a valid Author object
             </summary>
             <param name="author">A complete Authors object.</param>
             <returns>Returns 400 BAD REQUEST if the Authors object is not valid. Returns a 201 CREATED with specifics of the object if successful.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.AuthorsController.PutAuthor(System.Int32,Bookstore.API.Models.Author)">
+        <member name="M:Bookstore.API.Controllers.AuthorsController.PutAuthor(System.Int32,Bookstore.API.Models.Authors)">
             <summary>
             Update an Author using authorId and an Author object. NOTE: You cannot create a new Author object with this method.
             </summary>
@@ -567,12 +575,14 @@
             <param name="category">Category name to query against all Book categories.</param>
             <returns>Returns a list of Book objects filtered by the String in the query. List is alphabetized by book title.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.BooksController.GetBookByAuthor(System.String,System.String)">
+        <member name="M:Bookstore.API.Controllers.BooksController.GetBookByAuthorId(System.Int32)">
             <summary>
-            Get a list of books based on the author's first name and last name. NOTE: This query uses both an EQUAL and CONTAINS method. "Jon Smith" will return BOTH "Jon Smith" and "Jonathan Smithers."
+            GET List of books by AuthorId
             </summary>
-            <param name="firstName">Author first name to query against all Book titles.</param>
-            <param name="lastName">Author last name to query against all Book titles.</param>
+            <param name="authorId">Unique identifier of the Author object.</param>
+            <returns>Returns a 200 OK with a list of Books objects. If no books are found, returns a 404 NOT FOUND.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksController.GetBookByAuthorName">
             <returns>Returns a list of Book objects filtered by the String in the query. List is alphabetized by Title, then Author name.</returns>
         </member>
         <member name="M:Bookstore.API.Controllers.BooksController.GetBooksByDate(System.DateTime)">
@@ -589,7 +599,7 @@
             <param name="bookId">Unique Identifier for Book object.</param>
             <returns>Returns a 404 NOT FOUND if bookId is not valid. Returns a 204 NO CONTENT if there are no reviews of the Book. Returns a 200 OK with an AuthorStats object if successful.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.BooksController.PutTitle(System.Int32,Bookstore.API.Models.Book)">
+        <member name="M:Bookstore.API.Controllers.BooksController.PutTitle(System.Int32,Bookstore.API.Models.Books)">
             <summary>
             Edit an existing Book object. NOTE: You cannot create a new Book object using this method.
             </summary>
@@ -597,7 +607,7 @@
             <param name="book">Name of the Book in the database.</param>
             <returns>Returns a 400 if the model is invalid. Returns a 400 Bad Request if the id is invalid. Returns a 204 No Content if successful. Returns a 404 Not Found if the id does not already exist in the database.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.BooksController.PostBooks(Bookstore.API.Models.Book)">
+        <member name="M:Bookstore.API.Controllers.BooksController.PostBooks(Bookstore.API.Models.Books)">
             <summary>
             Creates a new Book object in the database.
             </summary>
@@ -628,7 +638,7 @@
             <param name="bookreviewId">Unique identifier for the BookReview object.</param>
             <returns>Returns 200 OK with full Authors, Books, Reviews, and BooksReviews object. Returns 404 NOT FOUND if brId does not exist in the database.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.BooksReviewsController.PutBooksReview(System.Int32,Bookstore.API.Models.BookReview)">
+        <member name="M:Bookstore.API.Controllers.BooksReviewsController.PutBooksReview(System.Int32,Bookstore.API.Models.BookReviews)">
             <summary>
             Update a Review using the ReviewId (brId) and a full BooksReviews object.
             </summary>
@@ -675,11 +685,11 @@
             <param name="countCategory">Unique identifier of the Category.</param>
             <returns>Returns an integer that represents the count of all books within the Category.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.CategoriesController.Post(Bookstore.API.Models.Category)">
+        <member name="M:Bookstore.API.Controllers.CategoriesController.Post(Bookstore.API.Models.Categories)">
             <summary>
             Create a new Category by providing a valid Category object.
             </summary>
-            <param name="value">A valid Category object.</param>
+            <param name="category">A valid Category object.</param>
             <returns>Returns a 201 CREATED response if successful. Returns a 400 BAD REQUEST response if Category object is not valid. Returns a 400 BAD REQUEST if the Category object already exists.</returns>
         </member>
         <member name="T:Bookstore.API.Controllers.ReviewsController">
@@ -707,14 +717,14 @@
             <param name="pubDate">Publication date of the Reviews object. Valid date formats are yyyy-mm-dd or yyyy/mm/dd.</param>
             <returns>Returns list of Reviews objects published on the query data. Returns 404 NOT FOUND if no Reviews objects were published on that date. Returns 400 BAD REQUEST if the reviewDate value is not properly formatted.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.ReviewsController.PostReview(Bookstore.API.Models.Review)">
+        <member name="M:Bookstore.API.Controllers.ReviewsController.PostReview(Bookstore.API.Models.Reviews)">
             <summary>
             Create a new Review by providing a valid Review object
             </summary>
             <param name="review">A complete Review object.</param>
             <returns>Returns 400 BAD REQUEST if the Reviews object is not valid. Returns a 201 CREATED with specifics of the object if successful.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.ReviewsController.PutReview(System.Int32,Bookstore.API.Models.Review)">
+        <member name="M:Bookstore.API.Controllers.ReviewsController.PutReview(System.Int32,Bookstore.API.Models.Reviews)">
             <summary>
             Update a Review using ReviewId and a Review object. NOTE: You cannot create a new Review object with this method.
             </summary>
@@ -729,259 +739,269 @@
             <param name="removeId">Unique identifier of the Reviews object to be removed.</param>
             <returns>Returns a 404 NOT FOUND response if the removeId parameter does not match an existing Reviewss object. Returns a 200 OK response with the details of the removed Reviews object if successful.</returns>
         </member>
-        <member name="T:Bookstore.API.Models.Book">
+        <member name="T:Bookstore.API.Models.Books">
             <summary>
             Book Model.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Book.BookId">
+        <member name="P:Bookstore.API.Models.Books.BookId">
             <summary>
             Unique identifier for the Book.
             </summary>
             <example>5</example>
         </member>
-        <member name="P:Bookstore.API.Models.Book.Title">
+        <member name="P:Bookstore.API.Models.Books.Title">
             <summary>
             Title of the Book.
             </summary>
             <example>Hire Chad: Making Great Business Decisions</example>
         </member>
-        <member name="P:Bookstore.API.Models.Book.Description">
+        <member name="P:Bookstore.API.Models.Books.Description">
             <summary>
             Description of the Book content.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Book.PublishDate">
+        <member name="P:Bookstore.API.Models.Books.PublishDate">
             <summary>
             Publication date for the Book.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Book.CoverImageUrl">
+        <member name="P:Bookstore.API.Models.Books.CoverImageUrl">
             <summary>
             URL for the cover image.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Book.CategoryId">
+        <member name="P:Bookstore.API.Models.Books.CategoryId">
             <summary>
             Genre/Category for the Book, from the Categories Model.
             </summary>
         </member>
-        <member name="T:Bookstore.API.Models.Category">
+        <member name="T:Bookstore.API.Models.Categories">
             <summary>
             Categories Model.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Category.CategoryId">
+        <member name="P:Bookstore.API.Models.Categories.CategoryId">
             <summary>
             Unique Identifier for the Category.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Category.Name">
+        <member name="P:Bookstore.API.Models.Categories.Name">
             <summary>
             Name of the Category.
             </summary>
         </member>
-        <member name="T:Bookstore.API.Models.Author">
+        <member name="T:Bookstore.API.Models.Authors">
             <summary>
             Author Modal
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Author.AuthorId">
+        <member name="P:Bookstore.API.Models.Authors.AuthorId">
             <summary>
             Unique Identifier for the Author.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Author.FirstName">
+        <member name="P:Bookstore.API.Models.Authors.FirstName">
             <summary>
             First name of the Author.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Author.LastName">
+        <member name="P:Bookstore.API.Models.Authors.LastName">
             <summary>
             Last name of the Author.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Author.HeadshotImageUrl">
+        <member name="P:Bookstore.API.Models.Authors.HeadshotImageUrl">
             <summary>
             Url for the Head Shot Image of the Author.
             </summary>
         </member>
-        <member name="T:Bookstore.API.Models.Review">
+        <member name="T:Bookstore.API.Models.Reviews">
             <summary>
             Book Reviews Model
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Review.ReviewId">
+        <member name="P:Bookstore.API.Models.Reviews.ReviewId">
             <summary>
             Unique identifier for the Book Review.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Review.ReviewText">
+        <member name="P:Bookstore.API.Models.Reviews.ReviewText">
             <summary>
             Text content of the Review.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Review.Rating">
+        <member name="P:Bookstore.API.Models.Reviews.Rating">
             <summary>
             Review rating of the Book.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.Review.PublishDate">
+        <member name="P:Bookstore.API.Models.Reviews.PublishDate">
             <summary>
             Publication date of the Review.
             </summary>
         </member>
-        <member name="T:Bookstore.API.Models.AuthorRating">
+        <member name="T:Bookstore.API.Models.AuthorRatings">
             <summary>
             Author-Rating Model. Derives Average Rating and Total Reviews.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.AuthorRating.AuthorId">
+        <member name="P:Bookstore.API.Models.AuthorRatings.AuthorId">
             <summary>
             Unique identifier of the Author from the Author Model.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.AuthorRating.FirstName">
+        <member name="P:Bookstore.API.Models.AuthorRatings.FirstName">
             <summary>
             First name of the Author from the Author Model.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.AuthorRating.LastName">
+        <member name="P:Bookstore.API.Models.AuthorRatings.LastName">
             <summary>
             Last name of the Author from the Author Model.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.AuthorRating.TotalReviews">
+        <member name="P:Bookstore.API.Models.AuthorRatings.TotalReviews">
             <summary>
             Total number of Reviews from the Review Model.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.AuthorRating.AvgRating">
+        <member name="P:Bookstore.API.Models.AuthorRatings.AvgRating">
             <summary>
             Average Review rating from the Review Model.
             </summary>
         </member>
-        <member name="T:Bookstore.API.Models.BookAuthor">
+        <member name="T:Bookstore.API.Models.BookAuthors">
             <summary>
             Reference Table for Book and Authors (Many Authors-to-One Book)
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookAuthor.Id">
+        <member name="P:Bookstore.API.Models.BookAuthors.Id">
             <summary>
             Unique Identifier
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookAuthor.BookId">
+        <member name="P:Bookstore.API.Models.BookAuthors.BookId">
             <summary>
             Book Unique Identifier
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookAuthor.AuthorId">
+        <member name="P:Bookstore.API.Models.BookAuthors.AuthorId">
             <summary>
             Author Unique Identifier
             </summary>
         </member>
-        <member name="T:Bookstore.API.Models.BookReview">
+        <member name="P:Bookstore.API.Models.BookAuthors.Book">
+            <summary>
+            Related Book object
+            </summary>
+        </member>
+        <member name="P:Bookstore.API.Models.BookAuthors.Author">
+            <summary>
+            Related Author object
+            </summary>
+        </member>
+        <member name="T:Bookstore.API.Models.BookReviews">
             <summary>
             Reference Table for Book and Reviews (Many Reviews-to-One Book)
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookReview.Id">
+        <member name="P:Bookstore.API.Models.BookReviews.Id">
             <summary>
             Unique Identifier
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookReview.BookId">
+        <member name="P:Bookstore.API.Models.BookReviews.BookId">
             <summary>
             Book Unique Identifier
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookReview.ReviewId">
+        <member name="P:Bookstore.API.Models.BookReviews.ReviewId">
             <summary>
             Review Unique Identifier
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookReview.AuthorId">
+        <member name="P:Bookstore.API.Models.BookReviews.AuthorId">
             <summary>
             Author Unique Identifier
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookReview.Book">
+        <member name="P:Bookstore.API.Models.BookReviews.Book">
             <summary>
             Related Book information.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookReview.Author">
+        <member name="P:Bookstore.API.Models.BookReviews.Author">
             <summary>
             Related Author information.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookReview.Reviews">
+        <member name="P:Bookstore.API.Models.BookReviews.Reviews">
             <summary>
             Related BookReview information.
             </summary>
         </member>
-        <member name="T:Bookstore.API.Models.AuthorRanking">
+        <member name="T:Bookstore.API.Models.AuthorRankings">
             <summary>
             Author Rankings based on Book Reviews. Minimum of 4 reviews is required.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.AuthorRanking.AuthorId">
+        <member name="P:Bookstore.API.Models.AuthorRankings.AuthorId">
             <summary>
             Unique identifier for Author, reflects the AuthorId in Authors
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.AuthorRanking.FirstName">
+        <member name="P:Bookstore.API.Models.AuthorRankings.FirstName">
             <summary>
             Author's first name.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.AuthorRanking.LastName">
+        <member name="P:Bookstore.API.Models.AuthorRankings.LastName">
             <summary>
             Author's last name.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.AuthorRanking.AverageRating">
+        <member name="P:Bookstore.API.Models.AuthorRankings.AverageRating">
             <summary>
             Average rating for Author's Book Reviews. Minimum of 4 reviews is required.
             </summary>
         </member>
-        <member name="T:Bookstore.API.Models.BookCategoryRanking">
+        <member name="T:Bookstore.API.Models.BookCategoryRankings">
             <summary>
             Book and Category Rankings based on Book Reviews. Minimum of 4 reviews required.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookCategoryRanking.BookId">
+        <member name="P:Bookstore.API.Models.BookCategoryRankings.BookId">
             <summary>
             Unique Identifier for Book
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookCategoryRanking.Title">
+        <member name="P:Bookstore.API.Models.BookCategoryRankings.Title">
             <summary>
             Book title from Book.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookCategoryRanking.PublishDate">
+        <member name="P:Bookstore.API.Models.BookCategoryRankings.PublishDate">
             <summary>
             Book publication data from Book.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookCategoryRanking.AverageRating">
+        <member name="P:Bookstore.API.Models.BookCategoryRankings.AverageRating">
             <summary>
             Average Rating of Book from Reviews. Minimum of 4 required.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookCategoryRanking.Category">
+        <member name="P:Bookstore.API.Models.BookCategoryRankings.Category">
             <summary>
             Category from Book.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookCategoryRanking.FirstName">
+        <member name="P:Bookstore.API.Models.BookCategoryRankings.FirstName">
             <summary>
             Author's first name from Authors.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BookCategoryRanking.LastName">
+        <member name="P:Bookstore.API.Models.BookCategoryRankings.LastName">
             <summary>
             Author's last name from Authors.
             </summary>

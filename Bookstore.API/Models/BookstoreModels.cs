@@ -9,7 +9,7 @@ namespace Bookstore.API.Models
     /// <summary>
     /// Book Model.
     /// </summary>
-    public class Book
+    public class Books
     {
         /// <summary>
         /// Unique identifier for the Book.
@@ -55,7 +55,7 @@ namespace Bookstore.API.Models
     /// <summary>
     /// Categories Model.
     /// </summary>
-    public class Category
+    public class Categories
     {
         /// <summary>
         /// Unique Identifier for the Category.
@@ -75,7 +75,7 @@ namespace Bookstore.API.Models
     /// <summary>
     /// Author Modal
     /// </summary>
-    public class Author
+    public class Authors
     {
         /// <summary>
         /// Unique Identifier for the Author.
@@ -111,7 +111,7 @@ namespace Bookstore.API.Models
     /// <summary>
     /// Book Reviews Model
     /// </summary>
-    public class Review
+    public class Reviews
     {
         /// <summary>
         /// Unique identifier for the Book Review.
@@ -146,7 +146,7 @@ namespace Bookstore.API.Models
     /// <summary>
     /// Author-Rating Model. Derives Average Rating and Total Reviews.
     /// </summary>
-    public class AuthorRating
+    public class AuthorRatings
     {
         //From Author Table
         /// <summary>
@@ -187,7 +187,7 @@ namespace Bookstore.API.Models
     /// <summary>
     /// Reference Table for Book and Authors (Many Authors-to-One Book)
     /// </summary>
-    public class BookAuthor
+    public class BookAuthors
     {
         /// <summary>
         /// Unique Identifier
@@ -202,12 +202,22 @@ namespace Bookstore.API.Models
         /// Author Unique Identifier
         /// </summary>
         public int AuthorId { get; set; }
+        /// <summary>
+        /// Related Book object
+        /// </summary>
+        [ForeignKey("BookId")]
+        public Books Book { get; set; }
+        /// <summary>
+        /// Related Author object
+        /// </summary>
+        [ForeignKey("AuthorId")]
+        public Authors Author { get; set; }
     }//end BookAuthors
 
     /// <summary>
     /// Reference Table for Book and Reviews (Many Reviews-to-One Book)
     /// </summary>
-    public class BookReview
+    public class BookReviews
     {
         /// <summary>
         /// Unique Identifier
@@ -230,23 +240,24 @@ namespace Bookstore.API.Models
         /// Related Book information.
         /// </summary>
         [ForeignKey("BookId")]
-        public virtual Book Book { get; set; }
+        public virtual Books Book { get; set; }
         /// <summary>
         /// Related Author information.
         /// </summary>
         [ForeignKey("AuthorId")]
-        public virtual Author Author { get; set; }
+        public virtual Authors Author { get; set; }
         /// <summary>
         /// Related BookReview information.
         /// </summary>
-        public virtual Review Reviews { get; set; }
+        [ForeignKey("ReviewId")]
+        public virtual Reviews Reviews { get; set; }
     }//end BookReviews
 
     /// <summary>
     /// Author Rankings based on Book Reviews. Minimum of 4 reviews is required.
     /// </summary>
     [Table("dbo.AuthorRankings")]
-    public class AuthorRanking
+    public class AuthorRankings
     {
         /// <summary>
         /// Unique identifier for Author, reflects the AuthorId in Authors
@@ -274,7 +285,8 @@ namespace Bookstore.API.Models
     /// <summary>
     /// Book and Category Rankings based on Book Reviews. Minimum of 4 reviews required.
     /// </summary>
-    public class BookCategoryRanking
+    [Table("dbo.BookCategoryRankings")]
+    public class BookCategoryRankings
     {
         /// <summary>
         /// Unique Identifier for Book

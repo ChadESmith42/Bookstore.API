@@ -25,7 +25,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <returns>Returns list of all BookReview objects.</returns>
         [Route("get")]
-        public IEnumerable<BookReview> GetBooksReviews()
+        public IEnumerable<BookReviews> GetBooksReviews()
         {
             return db.BooksReviews;
         }
@@ -39,7 +39,7 @@ namespace Bookstore.API.Controllers
         [Route("details/{bookreviewId}")]
         public IHttpActionResult GetBooksReviews(int bookreviewId)
         {
-            BookReview br = db.BooksReviews.Find(bookreviewId);
+            BookReviews br = db.BooksReviews.Find(bookreviewId);
             if (br == null)
             {
                 return NotFound();
@@ -62,12 +62,12 @@ namespace Bookstore.API.Controllers
         /// <returns>Returns 400 BAD REQUEST for invalid BooksReviews objects. Returns 400 BAD REQUEST if the brId and booksReview.Id do not match. Returns a 404 NOT FOUND if the brId does not match an existing BooksReview. Returns 204 NO CONTENT if PUT is successful.</returns>
         [Route("edit/{bookreviewId}")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBooksReview(int bookreviewId, [FromBody] BookReview booksReview)
+        public IHttpActionResult PutBooksReview(int bookreviewId, [FromBody] BookReviews booksReview)
         {
             //Model requires inclusion of Author, Book, & Review objects;
-            Author author = db.Authors.Find(booksReview.AuthorId);
-            Review review = db.Reviews.Find(booksReview.ReviewId);
-            Book book = db.Books.Find(booksReview.BookId);
+            Authors author = db.Authors.Find(booksReview.AuthorId);
+            Reviews review = db.Reviews.Find(booksReview.ReviewId);
+            Books book = db.Books.Find(booksReview.BookId);
             //Add existing Author, Book, and Review to booksReview object;
             booksReview.Author = author;
             booksReview.Reviews = review;
@@ -114,7 +114,7 @@ namespace Bookstore.API.Controllers
         [Route("delete/{bookreviewId}")]
         public IHttpActionResult Delete(int bookreviewId)
         {
-            BookReview br = db.BooksReviews.Find(bookreviewId);
+            BookReviews br = db.BooksReviews.Find(bookreviewId);
 
             if (br != null)
             {

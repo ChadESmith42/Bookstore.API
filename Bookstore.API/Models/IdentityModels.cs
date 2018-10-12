@@ -36,35 +36,35 @@ namespace Bookstore.API.Models
         /// <summary>
         /// Table of Books
         /// </summary>
-        public DbSet<Book> Books { get; set; }
+        public DbSet<Books> Books { get; set; }
         /// <summary>
         /// Table of Authors
         /// </summary>
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<Authors> Authors { get; set; }
         /// <summary>
         /// Table of Categories
         /// </summary>
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Categories> Categories { get; set; }
         /// <summary>
         /// Table of Reviews
         /// </summary>
-        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Reviews> Reviews { get; set; }
         /// <summary>
         /// Reference Table of Books and Authors
         /// </summary>
-        public DbSet<BookAuthor> BooksAuthors { get; set; }
+        public DbSet<BookAuthors> BooksAuthors { get; set; }
         /// <summary>
         /// Reference Table of Books and Reviews
         /// </summary>
-        public DbSet<BookReview> BooksReviews { get; set; }
+        public DbSet<BookReviews> BooksReviews { get; set; }
         /// <summary>
         /// Reference Table of Authors Ranked by Review Ratings.
         /// </summary>
-        public DbSet<AuthorRanking> AuthorRankings { get; set; }
+        public DbSet<AuthorRankings> AuthorRankings { get; set; }
         /// <summary>
         /// Reference Table of Books and Categories Ranked by Review Ratings.
         /// </summary>
-        public DbSet<BookCategoryRanking> BookCategoryRankings { get; set; }
+        public DbSet<BookCategoryRankings> BookCategoryRankings { get; set; }
 
     }
 }

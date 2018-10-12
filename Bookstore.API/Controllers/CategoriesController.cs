@@ -23,7 +23,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <returns>List of all Categories</returns>
         [Route("get")]
-        public IEnumerable<Category> Get()
+        public IEnumerable<Categories> Get()
         {
             return db.Categories;
         }
@@ -36,10 +36,10 @@ namespace Bookstore.API.Controllers
         /// <param name="categoryID">Unique identifier for each category.</param>
         /// <returns>Returns a single Category object. NOTE: If the Category does not exist in the database, you will receive a 404 NOT FOUND response.</returns>
         [Route("details/{categoryId:int}")]
-        [ResponseType(typeof(Category))]
+        [ResponseType(typeof(Categories))]
         public IHttpActionResult Get(int categoryID)
         {
-            Category category = db.Categories.Find(categoryID);
+            Categories category = db.Categories.Find(categoryID);
             if (category == null)
             {
                 return NotFound();
@@ -54,18 +54,18 @@ namespace Bookstore.API.Controllers
         /// <param name="bookInCategory">Unique identifier for the Category.</param>
         /// <returns>Returns a list of Books based on the Category queried. NOTE: You will receive a 404 NOT FOUND response if the Category does not exist.</returns>
         [Route("{bookInCategory:int}/books")]
-        [ResponseType(typeof(IEnumerable<Book>))]
+        [ResponseType(typeof(IEnumerable<Books>))]
         public IHttpActionResult GetBooksByCategory(int bookInCategory)
         {
-            Category cat = db.Categories.Find(bookInCategory);
+            Categories cat = db.Categories.Find(bookInCategory);
 
             if (cat == null)
             {
                 return NotFound();
             }
 
-            IEnumerable<Book> books = db.Books.Where(b => b.CategoryId == cat.CategoryId);
-            foreach (Book book in books)
+            IEnumerable<Books> books = db.Books.Where(b => b.CategoryId == cat.CategoryId);
+            foreach (Books book in books)
             {
                 book.Title = book.Title.Trim();
                 book.CoverImageUrl = book.CoverImageUrl.Trim();
@@ -84,7 +84,7 @@ namespace Bookstore.API.Controllers
         [ResponseType(typeof(int))]
         public IHttpActionResult GetBookCount(int countCategory)
         {
-            Category cat = db.Categories.Find(countCategory);
+            Categories cat = db.Categories.Find(countCategory);
             if (cat == null)
             {
                 return NotFound();
@@ -99,11 +99,11 @@ namespace Bookstore.API.Controllers
         /// <summary>
         /// Create a new Category by providing a valid Category object.
         /// </summary>
-        /// <param name="value">A valid Category object.</param>
+        /// <param name="category">A valid Category object.</param>
         /// <returns>Returns a 201 CREATED response if successful. Returns a 400 BAD REQUEST response if Category object is not valid. Returns a 400 BAD REQUEST if the Category object already exists.</returns>
         [Route("create")]
         [HttpPost]
-        public IHttpActionResult Post([FromBody]Category category)
+        public IHttpActionResult Post([FromBody]Categories category)
         {
             if (!ModelState.IsValid)
             {
