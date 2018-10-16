@@ -23,9 +23,9 @@ namespace Bookstore.API.Controllers
         /// <summary>
         /// GET List of all BookReview objects. These are the relationships between Books, Reviews, and Authors. Links are established through unique identifiers for each object.
         /// </summary>
-        /// <returns>Returns list of all BookReview objects.</returns>
+        /// <returns>Returns list of all BookReview objects and associated Reviews, Books, and Authors objects.</returns>
         [Route("get")]
-        public IEnumerable<BookReviews> GetBooksReviews()
+        public IEnumerable<BooksReviews> GetBooksReviews()
         {
             return db.BooksReviews;
         }
@@ -39,7 +39,7 @@ namespace Bookstore.API.Controllers
         [Route("details/{bookreviewId}")]
         public IHttpActionResult GetBooksReviews(int bookreviewId)
         {
-            BookReviews br = db.BooksReviews.Find(bookreviewId);
+            BooksReviews br = db.BooksReviews.Find(bookreviewId);
             if (br == null)
             {
                 return NotFound();
@@ -48,21 +48,35 @@ namespace Bookstore.API.Controllers
         }
 
         // POST: api/bookreview/create
+        /// <summary>
+        /// Create a new BooksReview object. Request must include valid Books, Authors, and Reviews objects.
+        /// </summary>
+        /// <param name="bookReview">Full qualified BooksReviews object. Includes Books, Reviews, and Authors objects.</param>
+        /// <returns>If ModelState is not valid, returns 400 BAD REQUEST. Returns 200 OK, with BooksReviews object, if successful.</returns>
         [Route("create")]
-        public void Post([FromBody]string value)
+        public IHttpActionResult CreateBooksReviews([FromBody] BooksReviews bookReview)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.BooksReviews.Add(bookReview);
+            db.SaveChanges();
+
+            return Ok(bookReview);
         }
 
         // PUT: api/bookreview/edit/5
         /// <summary>
         /// Update a Review using the ReviewId (brId) and a full BooksReviews object.
         /// </summary>
-        /// <param name="bookreviewId">Unique identifier for the BookReviews relationships.</param>
+        /// <param name="bookreviewId">Unique identifier for the BooksReviews relationships.</param>
         /// <param name="booksReview">Fully qualified BooksReviews object.</param>
         /// <returns>Returns 400 BAD REQUEST for invalid BooksReviews objects. Returns 400 BAD REQUEST if the brId and booksReview.Id do not match. Returns a 404 NOT FOUND if the brId does not match an existing BooksReview. Returns 204 NO CONTENT if PUT is successful.</returns>
         [Route("edit/{bookreviewId}")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBooksReview(int bookreviewId, [FromBody] BookReviews booksReview)
+        public IHttpActionResult PutBooksReview(int bookreviewId, [FromBody] BooksReviews booksReview)
         {
             //Model requires inclusion of Author, Book, & Review objects;
             Authors author = db.Authors.Find(booksReview.AuthorId);
@@ -102,8 +116,8 @@ namespace Bookstore.API.Controllers
                     throw;
                 }
             }
-            return StatusCode(HttpStatusCode.NoContent);
-        }//end PutTitle()
+            return Ok(booksReview);
+        }//end PutBooksReview()
 
         // DELETE: api/bookreview/delete/5
         /// <summary>
@@ -114,7 +128,7 @@ namespace Bookstore.API.Controllers
         [Route("delete/{bookreviewId}")]
         public IHttpActionResult Delete(int bookreviewId)
         {
-            BookReviews br = db.BooksReviews.Find(bookreviewId);
+            BooksReviews br = db.BooksReviews.Find(bookreviewId);
 
             if (br != null)
             {
@@ -128,6 +142,15 @@ namespace Bookstore.API.Controllers
                 return BadRequest($"No BookReview object with bookReviewId of {bookreviewId} was found.");
             }
         }//end Delete()
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         private bool BooksReviewExists(int id)
         {

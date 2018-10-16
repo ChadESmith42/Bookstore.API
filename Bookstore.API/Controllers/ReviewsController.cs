@@ -68,7 +68,30 @@ namespace Bookstore.API.Controllers
             }
 
             return Ok(reviews);
-        }
+        }//end GetReviewsByDate()
+
+        //GET: api/reviews/orphans
+        /// <summary>
+        /// Get a list of Reviews objects that are not associated with any BooksReviews records.
+        /// </summary>
+        /// <returns>Returns 200 OK with list of ReviewIds for orphaned records. If all Reviews are linked with BooksReviews, returns 204 NO CONTENT.</returns>
+        [Route("orphans")]
+        [HttpGet]
+        public IHttpActionResult OrphanedReviews()
+        {
+            IEnumerable<int> reviews = db.Reviews.Select(r => r.ReviewId).ToList();
+            IEnumerable<int> booksReviews = db.BooksReviews.Select(br => br.ReviewId).ToList();
+
+            reviews = reviews.Except(booksReviews);
+
+            if (reviews.Count() > 0)
+            {
+                return Ok(reviews.ToList());
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }//end OrphanedReviews();
+
 
         //// POST: api/Reviews/{review}
         /// <summary>
@@ -88,7 +111,7 @@ namespace Bookstore.API.Controllers
             db.Reviews.Add(review);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = review.ReviewId }, review);
+            return Ok(review);
 
         }//end PostReview()
 
@@ -117,7 +140,7 @@ namespace Bookstore.API.Controllers
 
             db.SaveChanges();
 
-            return StatusCode(HttpStatusCode.Accepted);
+            return Ok(review);
         }//end PutReview()
 
         // DELETE: api/Reviews/remove/5

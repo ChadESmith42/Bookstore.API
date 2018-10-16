@@ -75,4 +75,3 @@ C:\Users\Student\Documents\Visual Studio 2015\Projects\AMC.Bookstore\Bookstore.A
 C:\Users\Student\Documents\Visual Studio 2015\Projects\AMC.Bookstore\Bookstore.API.src\Bookstore.API\bin\System.Web.Http.Owin.xml
 C:\Users\Student\Documents\Visual Studio 2015\Projects\AMC.Bookstore\Bookstore.API.src\Bookstore.API\obj\Debug\Bookstore.API.dll
 C:\Users\Student\Documents\Visual Studio 2015\Projects\AMC.Bookstore\Bookstore.API.src\Bookstore.API\obj\Debug\Bookstore.API.pdb
-C:\Users\Student\Documents\Visual Studio 2015\Projects\AMC.Bookstore\Bookstore.API.src\Bookstore.API\obj\Debug\Bookstore.API.csprojResolveAssemblyReference.cache

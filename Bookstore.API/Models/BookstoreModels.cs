@@ -21,14 +21,14 @@ namespace Bookstore.API.Models
         /// Title of the Book.
         /// </summary>
         /// <example>Hire Chad: Making Great Business Decisions</example>
-        [MaxLength(80, ErrorMessage ="* Max length is 80 characters.")]
+        [StringLength(80, ErrorMessage ="* Max length is 80 characters.")]
         [DisplayFormat(ConvertEmptyStringToNull =false, HtmlEncode =false)]
         [Required]
         public string Title { get; set; }
         /// <summary>
         /// Description of the Book content.
         /// </summary>
-        [MaxLength(500,ErrorMessage ="*Maximum length is 500 characters.")]
+        [StringLength(500,ErrorMessage ="*Maximum length is 500 characters.")]
         [DisplayFormat(HtmlEncode =false,ConvertEmptyStringToNull =false,NullDisplayText ="Description not available at this time.")]
         public string Description { get; set; }
         /// <summary>
@@ -43,12 +43,21 @@ namespace Bookstore.API.Models
         /// </summary>
         [Display(Name ="Cover Image URL")]
         [DisplayFormat(ConvertEmptyStringToNull =false, HtmlEncode =false,NullDisplayText ="Cover image not available at this time.")]
-        [MaxLength(50,ErrorMessage ="*Max length is 50 characters.")]
+        [StringLength(50,ErrorMessage ="*Max length is 50 characters.")]
         public string CoverImageUrl { get; set; }
         /// <summary>
         /// Genre/Category for the Book, from the Categories Model.
         /// </summary>
         public int CategoryId { get; set; }
+
+        public Books TrimSpaces()
+        {
+            this.CoverImageUrl.TrimEnd();
+            this.Description.TrimEnd();
+            this.Title.TrimEnd();
+
+            return this;
+        }
     }//end Book
 
     //Categories (Genre) Model
@@ -66,7 +75,7 @@ namespace Bookstore.API.Models
         /// Name of the Category.
         /// </summary>
         [Required]
-        [MaxLength(100,ErrorMessage ="*Max length is 100 characters.")]
+        [StringLength(100,ErrorMessage ="*Max length is 100 characters.")]
         [Display(Name ="Category Name")]
         [DisplayFormat(ConvertEmptyStringToNull =false, HtmlEncode =false, NullDisplayText ="Category name not available at this time.")]
         public string Name { get; set; }
@@ -88,7 +97,7 @@ namespace Bookstore.API.Models
         [Required]
         [Display(Name ="First Name")]
         [DisplayFormat(ConvertEmptyStringToNull =false, HtmlEncode =false,NullDisplayText ="Author first name not available.")]
-        [MaxLength(80,ErrorMessage ="*Max length is 80 characters.")]
+        [StringLength(80,ErrorMessage ="*Max length is 80 characters.")]
         public string FirstName { get; set; }
         /// <summary>
         /// Last name of the Author.
@@ -96,7 +105,7 @@ namespace Bookstore.API.Models
         [Required]
         [Display(Name ="Last Name")]
         [DisplayFormat(ConvertEmptyStringToNull =false,HtmlEncode =false,NullDisplayText ="Author last name not available.")]
-        [MaxLength(80,ErrorMessage ="*Max length is 80 characters.")]
+        [StringLength(80,ErrorMessage ="*Max length is 80 characters.")]
         public string LastName { get; set; }
         /// <summary>
         /// Url for the Head Shot Image of the Author.
@@ -104,7 +113,7 @@ namespace Bookstore.API.Models
         [Required]
         [Display(Name ="Headshot Image URL")]
         [DisplayFormat(ConvertEmptyStringToNull =false, HtmlEncode =false,NullDisplayText ="Author headshot image URL is not available.")]
-        [MaxLength(100,ErrorMessage ="*Max length is 100 characters.")]
+        [StringLength(100,ErrorMessage ="*Max length is 100 characters.")]
         public string HeadshotImageUrl { get; set; }
     }//end Authors
 
@@ -123,7 +132,7 @@ namespace Bookstore.API.Models
         /// </summary>
         [Display(Name ="Review Text")]
         [DisplayFormat(ConvertEmptyStringToNull =false,HtmlEncode =false,NullDisplayText ="Review text not available.")]
-        [StringLength(10000,ErrorMessage ="*Review text must be at least 50 charcaters and not more than 10,000 characters.",MinimumLength =50)]
+        [StringLength(10000,ErrorMessage ="*Review text must be at least 50 charcaters and not more than 10,000 characters.",MinimumLength =5)]
         public string ReviewText { get; set; }
         /// <summary>
         /// Review rating of the Book.
@@ -159,14 +168,14 @@ namespace Bookstore.API.Models
         /// </summary>
         [Display(Name ="Author First Name")]
         [DisplayFormat(ConvertEmptyStringToNull =false,HtmlEncode =false,NullDisplayText ="Author first name not available.")]
-        [MaxLength(80,ErrorMessage ="*Max length is 80 characters.")]
+        [StringLength(80,ErrorMessage ="*Max length is 80 characters.")]
         public string FirstName { get; set; }
         /// <summary>
         /// Last name of the Author from the Author Model.
         /// </summary>
         [Display(Name ="Author Last Name")]
         [DisplayFormat(ConvertEmptyStringToNull =false,HtmlEncode =false,NullDisplayText ="Author last name not available.")]
-        [MaxLength(80,ErrorMessage ="*Max length is 80 characters.")]
+        [StringLength(80,ErrorMessage ="*Max length is 80 characters.")]
         public string LastName { get; set; }
         //Using Reviews, provide Count as Total Reviews
         /// <summary>
@@ -187,37 +196,34 @@ namespace Bookstore.API.Models
     /// <summary>
     /// Reference Table for Book and Authors (Many Authors-to-One Book)
     /// </summary>
-    public class BookAuthors
+    public partial class BooksAuthors
     {
         /// <summary>
-        /// Unique Identifier
+        /// Unique identifier for BooksAuthor records.
         /// </summary>
-        [Key]
         public int Id { get; set; }
         /// <summary>
-        /// Book Unique Identifier
+        /// Unique identifier for Books objects.
         /// </summary>
         public int BookId { get; set; }
         /// <summary>
-        /// Author Unique Identifier
+        /// Unique identifier for Authors objects.
         /// </summary>
         public int AuthorId { get; set; }
         /// <summary>
-        /// Related Book object
+        /// Associated Authors object.
         /// </summary>
-        [ForeignKey("BookId")]
-        public Books Book { get; set; }
+        public virtual Authors Author { get; set; }
         /// <summary>
-        /// Related Author object
+        /// Associated Books object.
         /// </summary>
-        [ForeignKey("AuthorId")]
-        public Authors Author { get; set; }
-    }//end BookAuthors
+        public virtual Books Book { get; set; }
+    }
 
     /// <summary>
     /// Reference Table for Book and Reviews (Many Reviews-to-One Book)
     /// </summary>
-    public class BookReviews
+    public class BooksReviews
     {
         /// <summary>
         /// Unique Identifier
@@ -251,7 +257,7 @@ namespace Bookstore.API.Models
         /// </summary>
         [ForeignKey("ReviewId")]
         public virtual Reviews Reviews { get; set; }
-    }//end BookReviews
+    }//end BooksReviews
 
     /// <summary>
     /// Author Rankings based on Book Reviews. Minimum of 4 reviews is required.
@@ -308,7 +314,7 @@ namespace Bookstore.API.Models
         /// <summary>
         /// Category from Book.
         /// </summary>
-        public string Category { get; set; }
+        public string BookCategory { get; set; }
         /// <summary>
         /// Author's first name from Authors.
         /// </summary>
@@ -317,7 +323,59 @@ namespace Bookstore.API.Models
         /// Author's last name from Authors.
         /// </summary>
         public string LastName { get; set; }
+        /// <summary>
+        /// Unique identifier for Category
+        /// </summary>
+        public int CategoryId { get; set; }
 
     }
 
-}//end namespace
+
+    /// <!--Not included in XML-->
+    [Table("dbo.BooksAuthorsView")]
+    public class BooksAuthorsView
+    {
+        /// <!--Not included in XML-->
+        [Key]
+        public int Id { get; set; }
+        /// <!--Not included in XML-->
+        public string FirstName { get; set; }
+        /// <!--Not included in XML-->
+        public string LastName { get; set; }
+        /// <!--Not included in XML-->
+        public string Title { get; set; }
+        /// <!--Not included in XML-->
+        public string Description { get; set; }
+        /// <!--Not included in XML-->
+        public string CoverImageUrl { get; set; }
+        /// <!--Not included in XML-->
+        public int CategoryId { get; set; }
+        /// <!--Not included in XML-->
+        public int AuthorId { get; set; }
+        /// <!--Not included in XML-->
+        public int BookId { get; set; }
+    }
+
+    /// <!--Not included in XML-->
+    [Table("dbo.ReviewCountRating")]
+    public class ReviewCountRating
+    {
+        /// <!--Not included in XML-->
+        [Key]
+        public int BookId { get; set; }
+        /// <!--Not included in XML-->
+        public int CountReviews { get; set; }
+        [DisplayFormat(DataFormatString ="{0:n1}")]
+        public decimal AvgRating { get; set; }
+    }
+
+    /// <summary>
+    /// AuthorName object for querying TWO parameters against Authors objects.
+    /// </summary>
+    public class AuthorName
+    {
+        public string fName { get; set; }
+        public string lName { get; set; }
+    }
+
+    }//end namespace

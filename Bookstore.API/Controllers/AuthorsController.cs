@@ -8,6 +8,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 
+
 namespace Bookstore.API.Controllers
 {
     /// <summary>
@@ -65,18 +66,42 @@ namespace Bookstore.API.Controllers
             return Ok(author);
         }//end Get(int id)
 
-        //GET: api/authors/name?fName=cha&lName=smi
+
         /// <summary>
-        /// GET: Find Authors by name search.
+        /// Get a list of Authors objects without an entry in the BooksAuthors table. (Orphaned records)
         /// </summary>
-        /// <param name="fName">String contained in Author First Name.</param>
-        /// <param name="lName">String contained in Author Last Name.</param>
+        /// <returns>Returns a list of AuthorId values that do not have an entry in the BooksAuthors table. If the list is NULL (all Author objects are accounted for, returns a 204 NO CONTENT.</returns>
+        [Route("orphans")]
+        [HttpGet]
+        public IHttpActionResult OrphanedAuthors()
+        {
+            IQueryable<int> authors = from a in db.Authors
+                                select a.AuthorId;
+            IQueryable<int> BooksAuthors = from ba in db.BooksAuthors
+                                           select ba.AuthorId;
+
+            authors = authors.Except(BooksAuthors);
+
+            if (authors.Count() == 0)
+            {
+                return Ok(HttpStatusCode.NoContent);
+            }
+
+            return Ok(authors);
+            
+        }
+
+        //POST: api/authors/name
+        /// <summary>
+        /// POST: Find Authors by name search.
+        /// </summary>
+        /// <param name="name">Fully qualified AuthorName object. String fName for First Name. String lName for Last Name.</param>
         /// <returns>Returns a list of Authors whose names contain the search query. Both names must match. Returns 404 NOT FOUND if no Author names match the query.</returns>
         [Route("name")]
-        [HttpGet]
-        public IHttpActionResult AuthorByName(string fName, string lName)
+        [HttpPost]
+        public IHttpActionResult AuthorByName([FromBody] AuthorName name)
         {
-            List<Authors> authors = db.Authors.Where(a => a.FirstName.Contains(fName) && a.LastName.Contains(lName)).ToList();
+            List<Authors> authors = db.Authors.Where(a => a.FirstName.Contains(name.fName) && a.LastName.Contains(name.lName)).ToList();
 
             if (authors.Count > 0)
             {
@@ -86,27 +111,11 @@ namespace Bookstore.API.Controllers
             return NotFound();
         }
 
-        public void BooksByName(string fName, string lName)
-        {
-            IEnumerable<Authors> authors = AuthorByName(fName, lName);
-
-            List<Books> books = new List<Books>();
-
-            foreach (var author in authors)
-            {
-
-            }
-
-
-        }
-
-
-
-        // POST: api/Authors
+        // POST: api/authors/create
         /// <summary>
-        /// Create a new Author by providing a valid Author object
+        /// Create a new Author by providing a valid Author object.
         /// </summary>
-        /// <param name="author">A complete Authors object.</param>
+        /// <param name="author">A fully qualified Author object.</param>
         /// <returns>Returns 400 BAD REQUEST if the Authors object is not valid. Returns a 201 CREATED with specifics of the object if successful.</returns>
         [ResponseType(typeof(Authors))]
         [Route("create")]
@@ -120,7 +129,7 @@ namespace Bookstore.API.Controllers
             db.Authors.Add(author);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = author.AuthorId }, author);
+            return Ok(author);
 
         }
 
@@ -149,7 +158,7 @@ namespace Bookstore.API.Controllers
 
             db.SaveChanges();
 
-            return StatusCode(HttpStatusCode.Accepted);
+            return Ok(author);
         }
 
         // DELETE: api/Authors/5
@@ -187,10 +196,10 @@ namespace Bookstore.API.Controllers
         /// <param name="authorId">Unique identifier for the Author.</param>
         /// <returns>If the Author is not in the database, returns a 404 NOT FOUND. Returns a 200 OK with an AuthorRating object if successful.</returns>
         [ResponseType(typeof(AuthorRatings))]
-        [Route("{authorId:int}/Stats/")]
+        [Route("{authorId:int}/stats/")]
         public IHttpActionResult GetAuthorRating(int authorId)
         {
-            if (!AuthorExists(authorId))
+            if (!AuthorExists(authorId) || (db.BooksReviews.Where(a => a.AuthorId == authorId).Count() == 0))
             {
                 return NotFound();
             }

@@ -52,11 +52,11 @@ namespace Bookstore.API.Models
         /// <summary>
         /// Reference Table of Books and Authors
         /// </summary>
-        public DbSet<BookAuthors> BooksAuthors { get; set; }
+        public DbSet<BooksAuthors> BooksAuthors { get; set; }
         /// <summary>
         /// Reference Table of Books and Reviews
         /// </summary>
-        public DbSet<BookReviews> BooksReviews { get; set; }
+        public DbSet<BooksReviews> BooksReviews { get; set; }
         /// <summary>
         /// Reference Table of Authors Ranked by Review Ratings.
         /// </summary>
@@ -65,6 +65,12 @@ namespace Bookstore.API.Models
         /// Reference Table of Books and Categories Ranked by Review Ratings.
         /// </summary>
         public DbSet<BookCategoryRankings> BookCategoryRankings { get; set; }
+        
+        /// <!--Not Included in XML-->
+        public DbSet<BooksAuthorsView> BooksAuthorsView { get; set; }
+        /// <!--Not Included in XML-->
+        public DbSet<ReviewCountRating> ReviewCountRating { get; set; }
 
-    }
-}
+    }//end IdentityModels
+
+}//end namespace

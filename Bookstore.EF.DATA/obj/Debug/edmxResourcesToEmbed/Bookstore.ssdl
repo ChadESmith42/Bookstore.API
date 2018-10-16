@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_A3C1E2_apidemoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Authors">
+    <Key>
+      <PropertyRef Name="AuthorId" />
+    </Key>
+    <Property Name="AuthorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nchar" MaxLength="80" Nullable="false" />
+    <Property Name="LastName" Type="nchar" MaxLength="80" Nullable="false" />
+    <Property Name="HeadshotImageUrl" Type="nchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Books">
+    <Key>
+      <PropertyRef Name="BookId" />
+    </Key>
+    <Property Name="BookId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nchar" MaxLength="80" Nullable="false" />
+    <Property Name="Description" Type="nchar" MaxLength="500" />
+    <Property Name="PublishDate" Type="date" Nullable="false" />
+    <Property Name="CoverImageUrl" Type="nchar" MaxLength="50" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BooksAuthors">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookId" Type="int" Nullable="false" />
+    <Property Name="AuthorId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BooksReviews">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookId" Type="int" Nullable="false" />
+    <Property Name="ReviewId" Type="int" Nullable="false" />
+    <Property Name="AuthorId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reviews">
+    <Key>
+      <PropertyRef Name="ReviewId" />
+    </Key>
+    <Property Name="ReviewId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReviewText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Rating" Type="decimal" Precision="3" Scale="2" Nullable="false" />
+    <Property Name="PublishDate" Type="date" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_A3C1E2_apidemo.dbo.AuthorRankings' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="AuthorRankings">
+    <Key>
+      <PropertyRef Name="AuthorId" />
+    </Key>
+    <Property Name="FirstName" Type="nvarchar" MaxLength="80" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="80" />
+    <Property Name="AverageRating" Type="numeric" Precision="3" Scale="2" />
+    <Property Name="AuthorId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_A3C1E2_apidemo.dbo.BookCategoryRankings' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="BookCategoryRankings">
+    <Key>
+      <PropertyRef Name="PublishDate" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="BookId" />
+    </Key>
+    <Property Name="Title" Type="nvarchar" MaxLength="80" />
+    <Property Name="PublishDate" Type="date" Nullable="false" />
+    <Property Name="AverageRating" Type="decimal" Precision="3" Scale="2" />
+    <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="80" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="80" />
+    <Property Name="BookId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Books_Categories">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="Books" Type="Self.Books" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="Books">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BooksAuthors_Authors">
+    <End Role="Authors" Type="Self.Authors" Multiplicity="1" />
+    <End Role="BooksAuthors" Type="Self.BooksAuthors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Authors">
+        <PropertyRef Name="AuthorId" />
+      </Principal>
+      <Dependent Role="BooksAuthors">
+        <PropertyRef Name="AuthorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BooksAuthors_Books">
+    <End Role="Books" Type="Self.Books" Multiplicity="1" />
+    <End Role="BooksAuthors" Type="Self.BooksAuthors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="BookId" />
+      </Principal>
+      <Dependent Role="BooksAuthors">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BooksReviews_Authors">
+    <End Role="Authors" Type="Self.Authors" Multiplicity="1" />
+    <End Role="BooksReviews" Type="Self.BooksReviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Authors">
+        <PropertyRef Name="AuthorId" />
+      </Principal>
+      <Dependent Role="BooksReviews">
+        <PropertyRef Name="AuthorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BooksReviews_Books">
+    <End Role="Books" Type="Self.Books" Multiplicity="1" />
+    <End Role="BooksReviews" Type="Self.BooksReviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="BookId" />
+      </Principal>
+      <Dependent Role="BooksReviews">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BooksReviews_Reviews">
+    <End Role="Reviews" Type="Self.Reviews" Multiplicity="1" />
+    <End Role="BooksReviews" Type="Self.BooksReviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reviews">
+        <PropertyRef Name="ReviewId" />
+      </Principal>
+      <Dependent Role="BooksReviews">
+        <PropertyRef Name="ReviewId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_A3C1E2_apidemoModelStoreContainer">
+    <EntitySet Name="Authors" EntityType="Self.Authors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BooksAuthors" EntityType="Self.BooksAuthors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BooksReviews" EntityType="Self.BooksReviews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AuthorRankings" EntityType="Self.AuthorRankings" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AuthorRankings].[FirstName] AS [FirstName], 
+    [AuthorRankings].[LastName] AS [LastName], 
+    [AuthorRankings].[AverageRating] AS [AverageRating], 
+    [AuthorRankings].[AuthorId] AS [AuthorId]
+    FROM [dbo].[AuthorRankings] AS [AuthorRankings]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="BookCategoryRankings" EntityType="Self.BookCategoryRankings" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [BookCategoryRankings].[Title] AS [Title], 
+    [BookCategoryRankings].[PublishDate] AS [PublishDate], 
+    [BookCategoryRankings].[AverageRating] AS [AverageRating], 
+    [BookCategoryRankings].[Name] AS [Name], 
+    [BookCategoryRankings].[FirstName] AS [FirstName], 
+    [BookCategoryRankings].[LastName] AS [LastName], 
+    [BookCategoryRankings].[BookId] AS [BookId]
+    FROM [dbo].[BookCategoryRankings] AS [BookCategoryRankings]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Books_Categories" Association="Self.FK_Books_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Books" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BooksAuthors_Authors" Association="Self.FK_BooksAuthors_Authors">
+      <End Role="Authors" EntitySet="Authors" />
+      <End Role="BooksAuthors" EntitySet="BooksAuthors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BooksAuthors_Books" Association="Self.FK_BooksAuthors_Books">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="BooksAuthors" EntitySet="BooksAuthors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BooksReviews_Authors" Association="Self.FK_BooksReviews_Authors">
+      <End Role="Authors" EntitySet="Authors" />
+      <End Role="BooksReviews" EntitySet="BooksReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BooksReviews_Books" Association="Self.FK_BooksReviews_Books">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="BooksReviews" EntitySet="BooksReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BooksReviews_Reviews" Association="Self.FK_BooksReviews_Reviews">
+      <End Role="Reviews" EntitySet="Reviews" />
+      <End Role="BooksReviews" EntitySet="BooksReviews" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
