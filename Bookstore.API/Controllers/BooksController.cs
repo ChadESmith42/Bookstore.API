@@ -243,7 +243,7 @@ namespace Bookstore.API.Controllers
         [ResponseType(typeof(Books))]
         [HttpPut]
         [Route("edit/{bookId:int}")]
-        public IHttpActionResult PutBook(int bookId, [FromBody] Books book)
+        public IHttpActionResult PutBooks(int bookId, [FromBody] Books book)
         {
             if (!ModelState.IsValid)
             {
@@ -274,7 +274,7 @@ namespace Bookstore.API.Controllers
             }
 
             return Ok(book);
-        }//end PutBook()
+        }//end PutBooks()
 
 
         // POST: api/books/create

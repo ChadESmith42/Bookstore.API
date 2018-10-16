@@ -69,45 +69,34 @@ namespace Bookstore.API.Controllers
 
         // PUT: api/bookreview/edit/5
         /// <summary>
-        /// Update a Review using the ReviewId (brId) and a full BooksReviews object.
+        /// Update a Review using the ReviewId (bookReviewId) and a full BooksReviews object.
         /// </summary>
-        /// <param name="bookreviewId">Unique identifier for the BooksReviews relationships.</param>
+        /// <param name="bookReviewId">Unique identifier for the BooksReviews relationships.</param>
         /// <param name="booksReview">Fully qualified BooksReviews object.</param>
         /// <returns>Returns 400 BAD REQUEST for invalid BooksReviews objects. Returns 400 BAD REQUEST if the brId and booksReview.Id do not match. Returns a 404 NOT FOUND if the brId does not match an existing BooksReview. Returns 204 NO CONTENT if PUT is successful.</returns>
         [Route("edit/{bookreviewId}")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBooksReview(int bookreviewId, [FromBody] BooksReviews booksReview)
+        public IHttpActionResult PutBooksReview(int bookReviewId, [FromBody] BooksReviews booksReview)
         {
-            //Model requires inclusion of Author, Book, & Review objects;
-            Authors author = db.Authors.Find(booksReview.AuthorId);
-            Reviews review = db.Reviews.Find(booksReview.ReviewId);
-            Books book = db.Books.Find(booksReview.BookId);
-            //Add existing Author, Book, and Review to booksReview object;
-            booksReview.Author = author;
-            booksReview.Reviews = review;
-            booksReview.Book = book;
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (bookreviewId != booksReview.Id)
+            if (bookReviewId != booksReview.Id)
             {
                 return BadRequest();
             }
 
             db.Entry(booksReview).State = EntityState.Modified;
-
             
-
             try
             {
                 db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BooksReviewExists(bookreviewId))
+                if (!BooksReviewExists(bookReviewId))
                 {
                     return NotFound();
                 }
@@ -123,12 +112,12 @@ namespace Bookstore.API.Controllers
         /// <summary>
         /// DELETE: Remove a BookReviw object from the database.
         /// </summary>
-        /// <param name="bookreviewId">Unique identifier for the BookReview object.</param>
+        /// <param name="bookReviewId">Unique identifier for the BookReview object.</param>
         /// <return></return>
         [Route("delete/{bookreviewId}")]
-        public IHttpActionResult Delete(int bookreviewId)
+        public IHttpActionResult Delete(int bookReviewId)
         {
-            BooksReviews br = db.BooksReviews.Find(bookreviewId);
+            BooksReviews br = db.BooksReviews.Find(bookReviewId);
 
             if (br != null)
             {
@@ -139,7 +128,7 @@ namespace Bookstore.API.Controllers
             }
             else
             {
-                return BadRequest($"No BookReview object with bookReviewId of {bookreviewId} was found.");
+                return BadRequest($"No BookReview object with bookReviewId of {bookReviewId} was found.");
             }
         }//end Delete()
 

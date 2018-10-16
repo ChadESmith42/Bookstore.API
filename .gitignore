@@ -1,0 +1,10 @@
+Bookstore.API/Web.Debug.config
+Bookstore.EF.DATA/Web.Debug.config
+Bookstore.EF.DATA/
+*.user
+*.csproj
+*.sql
+*.dll
+Bookstore.API/obj/
+Bookstore.API/fonts/
+Bookstore.API/bin/

@@ -210,14 +210,6 @@ namespace Bookstore.API.Models
         /// Unique identifier for Authors objects.
         /// </summary>
         public int AuthorId { get; set; }
-        /// <summary>
-        /// Associated Authors object.
-        /// </summary>
-        public virtual Authors Author { get; set; }
-        /// <summary>
-        /// Associated Books object.
-        /// </summary>
-        public virtual Books Book { get; set; }
     }
 
     /// <summary>
@@ -245,18 +237,6 @@ namespace Bookstore.API.Models
         /// <summary>
         /// Related Book information.
         /// </summary>
-        [ForeignKey("BookId")]
-        public virtual Books Book { get; set; }
-        /// <summary>
-        /// Related Author information.
-        /// </summary>
-        [ForeignKey("AuthorId")]
-        public virtual Authors Author { get; set; }
-        /// <summary>
-        /// Related BookReview information.
-        /// </summary>
-        [ForeignKey("ReviewId")]
-        public virtual Reviews Reviews { get; set; }
     }//end BooksReviews
 
     /// <summary>

@@ -1,0 +1,1331 @@
+{
+	"info": {
+		"_postman_id": "f25d6547-43f8-e870-0c17-61889836705d",
+		"name": "AMC.Bookstore",
+		"description": "API for fictional AMC Bookstore.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Books Objects",
+			"item": [
+				{
+					"name": "GET: api/books/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"get"
+							]
+						},
+						"description": "Get a list of all books in the database."
+					},
+					"response": []
+				},
+				{
+					"name": "GET api/books/details/{bookId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/details/14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"details",
+								"14"
+							]
+						},
+						"description": "Get a single book based on the unique identifier for that book."
+					},
+					"response": []
+				},
+				{
+					"name": "GET api/books/title/{title}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/title/bubble",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"title",
+								"bubble"
+							]
+						},
+						"description": "Get a list of books that contain the search term in the title. The query {title} is treated like a wildcard."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/books/category/{category}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/category/comp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"category",
+								"comp"
+							]
+						},
+						"description": "Get a list of books based on category name. The query {categoy} is treated as a wildcard."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/books/author/{authorId}/details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/author/17/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"author",
+								"17",
+								"details"
+							]
+						},
+						"description": "Get a list of books by AuthorId."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/books/date/{pubDate}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/date/2018-10-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"date",
+								"2018-10-01"
+							]
+						},
+						"description": "Query Books object by Publication Date."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/books/stats/{bookId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/stats/14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"stats",
+								"14"
+							]
+						},
+						"description": "Get Book Rating using bookId."
+					},
+					"response": []
+				},
+				{
+					"name": "PUT: api/books/edit/{bookId}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"BookId\": 18,\n        \"Title\": \"All Out of Bubble Gum\",\n        \"Description\": \"Focusing on the task at hand is hard. Let Chad show you how!\",\n        \"PublishDate\": \"2018-10-01T00:00:00\",\n        \"CoverImageUrl\": \"none\",\n        \"CategoryId\": 2\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/edit/18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"edit",
+								"18"
+							]
+						},
+						"description": "Edit an existing Book object. NOTE: You cannot create a new Book object using this method."
+					},
+					"response": []
+				},
+				{
+					"name": "POST: api/books/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"BookId\": 11,\r\n  \"Title\": \"This API Actually Works\",\r\n  \"Description\": \"The API to handle the Bookstore is working as designed. All of the simple URL calls are easy to use. The data is easy to understand.\",\r\n  \"PublishDate\": \"2018-10-15T19:49:28.6259373-05:00\",\r\n  \"CoverImageUrl\": \"none\",\r\n  \"CategoryId\": 2\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"create"
+							]
+						},
+						"description": "Creates a new Book object in the database."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: api/books/delete/{bookId}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/books/delete/24",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"books",
+								"delete",
+								"24"
+							]
+						},
+						"description": "Delete a Book by unique identifier."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews Objects",
+			"item": [
+				{
+					"name": "GET: api/reviews/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/reviews/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"reviews",
+								"get"
+							]
+						},
+						"description": "GET All Book Reviews from database."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/reviews/details/{reviewId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/reviews/details/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"reviews",
+								"details",
+								"10"
+							]
+						},
+						"description": "Get a single Review by ReviewId"
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/reviews/date/{pubDate}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/reviews/date/2018-10-05",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"reviews",
+								"date",
+								"2018-10-05"
+							]
+						},
+						"description": "Query Reviews object by Publication Date."
+					},
+					"response": []
+				},
+				{
+					"name": "POST: api/reviews/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"ReviewId\": 2,\n        \"ReviewText\": \"Being new at something is hard. Gaining experience is harder. But having a desire to be better? That's easy. Doesn't take talent. It just takes the will to make it happen.\",\n        \"Rating\": 4.81,\n        \"PublishDate\": \"2018-10-02T00:00:00\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/reviews/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"reviews",
+								"create"
+							]
+						},
+						"description": "Create a new Review by providing a valid Review object."
+					},
+					"response": []
+				},
+				{
+					"name": "PUT: api/reviews/edit/{reviewId}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"ReviewId\": 9,\n        \"ReviewText\": \"When you're all out of bubble gum, you'll know what to do.\",\n        \"Rating\": 4.81,\n        \"PublishDate\": \"2018-10-10T00:00:00\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/reviews/edit/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"reviews",
+								"edit",
+								"9"
+							]
+						},
+						"description": "Update a Review using ReviewId and a Review object. NOTE: You cannot create a new Review object with this method."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: api/reviews/delete/{reviewId}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/reviews/delete/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"reviews",
+								"delete",
+								"11"
+							]
+						},
+						"description": "Removes a single Reviews object from the database."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/reviews/orphans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/reviews/orphans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"reviews",
+								"orphans"
+							]
+						},
+						"description": "Get a list of Reviews objects that are not associated with any BooksReviews records."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories Objects",
+			"item": [
+				{
+					"name": "GET: api/category/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/category/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"category",
+								"get"
+							]
+						},
+						"description": "Get a list of all Categories objects."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/category/details/{categoryId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/category/details/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"category",
+								"details",
+								"1"
+							]
+						},
+						"description": "Get Category information by unique identifier."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/category/{inCategoryId}/books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/category/3/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"category",
+								"3",
+								"books"
+							]
+						},
+						"description": "Select all books within a Category, by CategoryId"
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/category/{countCategory}/count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/category/3/count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"category",
+								"3",
+								"count"
+							]
+						},
+						"description": "Get the count of all books within a Category, by CategoryId."
+					},
+					"response": []
+				},
+				{
+					"name": "POST: api/category/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CategoryId\": 6,\r\n  \"Name\": \"New Test Category\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/category/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"category",
+								"create"
+							]
+						},
+						"description": "Create a new Category by providing a valid Category object."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: api/category/delete/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/category/delete/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"category",
+								"delete",
+								"15"
+							]
+						},
+						"description": "Remove Category object by CategoryId."
+					},
+					"response": []
+				},
+				{
+					"name": "PUT: api/category/edit/{categoryId}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CategoryId\": 16,\r\n  \"Name\": \"World History\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/category/edit/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"category",
+								"edit",
+								"16"
+							]
+						},
+						"description": "Edit an existing Categories object using the CategoryId identifier and a fully qualified Category Object in the body."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/category/{categoryId}/top",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/category/3/top",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"category",
+								"3",
+								"top"
+							]
+						},
+						"description": "Get a list of the top rated books in a Category by categoryId."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authors Objects",
+			"item": [
+				{
+					"name": "GET: api/authors/orphans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/authors/orphans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"authors",
+								"orphans"
+							]
+						},
+						"description": "Get a list of Authors objects without an entry in the BooksAuthors table. (Orphaned records)"
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/authors/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/authors/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"authors",
+								"get"
+							]
+						},
+						"description": "Get a list of all Authors objects in the database."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/authors/details/{authorId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/authors/details/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"authors",
+								"details",
+								"11"
+							]
+						},
+						"description": "Get the details for a specific Author by unique identifier."
+					},
+					"response": []
+				},
+				{
+					"name": "api/authors/{authorId}/stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/authors/17/stats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"authors",
+								"17",
+								"stats"
+							]
+						},
+						"description": "Get an Authors Book Review Stats. NOTE: This covers all books by an Author, not just one book."
+					},
+					"response": []
+				},
+				{
+					"name": "PUT: api/authors/edit/{authorId}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"AuthorId\": 19,\n        \"FirstName\": \"Chance\",\n        \"LastName\": \"Smithers\",\n        \"HeadshotImageUrl\": \"none\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/authors/edit/19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"authors",
+								"edit",
+								"19"
+							]
+						},
+						"description": "Update an Author using authorId and an Author object. NOTE: You cannot create a new Author object with this method."
+					},
+					"response": []
+				},
+				{
+					"name": "POST: api/authors/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"AuthorId\": 1,\r\n  \"FirstName\": \"Charles\",\r\n  \"LastName\": \"Smiley\",\r\n  \"HeadshotImageUrl\": \"none\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/authors/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"authors",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST: api/authors/name",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fName\" : \"cha\",\n\t\"lName\" : \"smi\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/authors/name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"authors",
+								"name"
+							]
+						},
+						"description": "Find Authors by name search."
+					},
+					"response": []
+				},
+				{
+					"name": "POST: api/authors/rankings",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"AuthorId\": 19,\n        \"FirstName\": \"Chance\",\n        \"LastName\": \"Smithers\",\n        \"HeadshotImageUrl\": \"none\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/authors/rankings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"authors",
+								"rankings"
+							]
+						},
+						"description": "Get the Authors ranked by their Reviews. (Minimum of 4 reviews are required.)"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: api/authors/delete/{authorId}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"AuthorId\": 19,\n        \"FirstName\": \"Chance\",\n        \"LastName\": \"Smithers\",\n        \"HeadshotImageUrl\": \"none\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/authors/delete/19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"authors",
+								"delete",
+								"19"
+							]
+						},
+						"description": "Removes a single Authors object from the database."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BooksReviews",
+			"item": [
+				{
+					"name": "GET: api/bookreview/get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"AuthorId\": 19,\n        \"FirstName\": \"Chance\",\n        \"LastName\": \"Smithers\",\n        \"HeadshotImageUrl\": \"none\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/bookreview/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"bookreview",
+								"get"
+							]
+						},
+						"description": "List of all BookReview objects. These are the relationships between Books, Reviews, and Authors. Links are established through unique identifiers for each object."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/bookreview/details/{booksReviewId}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"AuthorId\": 19,\n        \"FirstName\": \"Chance\",\n        \"LastName\": \"Smithers\",\n        \"HeadshotImageUrl\": \"none\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/bookreview/details/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"bookreview",
+								"details",
+								"1"
+							]
+						},
+						"description": "Single BookReview object by Id. Includes Book, Author, and Review objects."
+					},
+					"response": []
+				},
+				{
+					"name": "POST: api/bookreview/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Id\": 4,\n    \"BookId\": 14,\n    \"ReviewId\": 10,\n    \"AuthorId\": 17\n}"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/bookreview/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"bookreview",
+								"create"
+							]
+						},
+						"description": "Create a new BooksReview object. Request must include valid Books, Authors, and Reviews objects."
+					},
+					"response": []
+				},
+				{
+					"name": "PUT: api/bookreview/edit/4",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Id\": 10,\n        \"BookId\": 18,\n        \"ReviewId\": 7,\n        \"AuthorId\": 17\n}"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/bookreview/edit/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"bookreview",
+								"edit",
+								"10"
+							]
+						},
+						"description": "Update a Review using the ReviewId (brId) and a full BooksReviews object."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: api/bookreview/delete/{booksReviewsId}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/bookreview/delete/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"bookreview",
+								"delete",
+								"4"
+							]
+						},
+						"description": "Remove a BookReviw object from the database."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BooksAuthors",
+			"item": [
+				{
+					"name": "GET: api/booksauthors/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/booksauthors/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"booksauthors",
+								"get"
+							]
+						},
+						"description": "Returns a list of all BooksAuthors records."
+					},
+					"response": []
+				},
+				{
+					"name": "GET: api/booksauthors/2/details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/booksauthors/2/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"booksauthors",
+								"2",
+								"details"
+							]
+						},
+						"description": "Returns details for a specific BooksAuthors object."
+					},
+					"response": []
+				},
+				{
+					"name": "POST: api/booksauthors/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 1,\r\n  \"BookId\": 18,\r\n  \"AuthorId\": 17\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/booksauthors/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"booksauthors",
+								"create"
+							]
+						},
+						"description": "Create a new BooksAuthors object."
+					},
+					"response": []
+				},
+				{
+					"name": "PUT: api/booksauthors/edit/{booksAuthorId}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 6,\r\n  \"BookId\": 16,\r\n  \"AuthorId\": 21\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/booksauthors/edit/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"booksauthors",
+								"edit",
+								"6"
+							]
+						},
+						"description": "Update an existing BooksAuthors object. NOTE: You CANNOT create a new BooksAuthors object using this method."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: api/booksauthors/delete/{booksAuthorsId}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:50810/api/booksauthors/delete/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50810",
+							"path": [
+								"api",
+								"booksauthors",
+								"delete",
+								"6"
+							]
+						},
+						"description": "Remove a BooksAuthors object from the database."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

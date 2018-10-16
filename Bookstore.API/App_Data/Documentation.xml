@@ -548,6 +548,49 @@
             <example>api/AuthorsRankings/</example>
             <returns>Returns 200 OK with list of Authors ordered by Ranking in descending order. List is then ordered by Author's Last Name, and First Name alphabetically.</returns>
         </member>
+        <member name="T:Bookstore.API.Controllers.BooksAuthorsController">
+            <summary>
+            Queries supported for the BooksAuthors Table.
+            </summary>
+            <remarks>
+            BooksAuthors Table captures the relationship between Authors (1-to-Multiple objects) and Books (1 object).
+            </remarks>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksAuthorsController.Get">
+            <summary>
+            Returns a list of all BooksAuthors records.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksAuthorsController.Get(System.Int32)">
+            <summary>
+            Returns details for a specific BooksAuthors object.
+            </summary>
+            <param name="bookAuthorsId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksAuthorsController.PostBooksAuthors(Bookstore.API.Models.BooksAuthors)">
+            <summary>
+            Create a new BooksAuthors object.
+            </summary>
+            <remarks>Book object and Author object should already exist before using this API POST call.</remarks>
+            <param name="booksAuthors">BooksAuthor object contains Id, BookId, and AuthorId. Id can be anything, as the DB will assign the next available value.</param>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksAuthorsController.PutBooksAuthors(System.Int32,Bookstore.API.Models.BooksAuthors)">
+            <summary>
+            Update an existing BooksAuthors object. NOTE: You CANNOT create a new BooksAuthors object using this method.
+            </summary>
+            <param name="booksAuthorsId">Unique identifier for an existing BooksAuthors object.</param>
+            <param name="booksAuthors">A fully qualified BooksAuthors object.</param>
+            <returns>Returns 400 BAD REQUEST if a prerequisite object does not exist. Returns a 400 BAD REQUEST if the BooksAuthors object has a bad ModelState. Returns a 400 BAD REQUEST if the booksAuthorsId and BooksAuthors.Id do not match. Returns 200 OK, with booksAuthors object in body, if successful.</returns>
+        </member>
+        <member name="M:Bookstore.API.Controllers.BooksAuthorsController.DeleteBooksAuthors(System.Int32)">
+            <summary>
+            Remove a BooksAuthors object from the database.
+            </summary>
+            <param name="booksAuthorsId">Unique identifier for the BooksAuthors object.</param>
+            <returns>Returns 200 OK, with BooksAuthors object in the body, if successful. If the BooksAuthor object does not exist, returns 404 NOT FOUND.</returns>
+        </member>
         <member name="T:Bookstore.API.Controllers.BooksController">
             <summary>
             Supported queries for Books within the AMC Bookstore. Don't see what you need? Contact us!
@@ -601,7 +644,7 @@
             <param name="bookId">Unique Identifier for Book object.</param>
             <returns>Returns a 404 NOT FOUND if bookId is not valid. Returns a 204 NO CONTENT if there are no reviews of the Book. Returns a 200 OK with an AuthorStats object if successful.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.BooksController.PutBook(System.Int32,Bookstore.API.Models.Books)">
+        <member name="M:Bookstore.API.Controllers.BooksController.PutBooks(System.Int32,Bookstore.API.Models.Books)">
             <summary>
             Edit an existing Book object. NOTE: You cannot create a new Book object using this method.
             </summary>
@@ -649,9 +692,9 @@
         </member>
         <member name="M:Bookstore.API.Controllers.BooksReviewsController.PutBooksReview(System.Int32,Bookstore.API.Models.BooksReviews)">
             <summary>
-            Update a Review using the ReviewId (brId) and a full BooksReviews object.
+            Update a Review using the ReviewId (bookReviewId) and a full BooksReviews object.
             </summary>
-            <param name="bookreviewId">Unique identifier for the BooksReviews relationships.</param>
+            <param name="bookReviewId">Unique identifier for the BooksReviews relationships.</param>
             <param name="booksReview">Fully qualified BooksReviews object.</param>
             <returns>Returns 400 BAD REQUEST for invalid BooksReviews objects. Returns 400 BAD REQUEST if the brId and booksReview.Id do not match. Returns a 404 NOT FOUND if the brId does not match an existing BooksReview. Returns 204 NO CONTENT if PUT is successful.</returns>
         </member>
@@ -659,7 +702,7 @@
             <summary>
             DELETE: Remove a BookReviw object from the database.
             </summary>
-            <param name="bookreviewId">Unique identifier for the BookReview object.</param>
+            <param name="bookReviewId">Unique identifier for the BookReview object.</param>
             <return></return>
         </member>
         <member name="T:Bookstore.API.Controllers.CategoriesController">
@@ -929,16 +972,6 @@
             Unique identifier for Authors objects.
             </summary>
         </member>
-        <member name="P:Bookstore.API.Models.BooksAuthors.Author">
-            <summary>
-            Associated Authors object.
-            </summary>
-        </member>
-        <member name="P:Bookstore.API.Models.BooksAuthors.Book">
-            <summary>
-            Associated Books object.
-            </summary>
-        </member>
         <member name="T:Bookstore.API.Models.BooksReviews">
             <summary>
             Reference Table for Book and Reviews (Many Reviews-to-One Book)
@@ -962,21 +995,6 @@
         <member name="P:Bookstore.API.Models.BooksReviews.AuthorId">
             <summary>
             Author Unique Identifier
-            </summary>
-        </member>
-        <member name="P:Bookstore.API.Models.BooksReviews.Book">
-            <summary>
-            Related Book information.
-            </summary>
-        </member>
-        <member name="P:Bookstore.API.Models.BooksReviews.Author">
-            <summary>
-            Related Author information.
-            </summary>
-        </member>
-        <member name="P:Bookstore.API.Models.BooksReviews.Reviews">
-            <summary>
-            Related BookReview information.
             </summary>
         </member>
         <member name="T:Bookstore.API.Models.AuthorRankings">
