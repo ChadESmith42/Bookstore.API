@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Bookstore.API.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Results;
-using System.Web.Http.Description;
-using Bookstore.API.Models;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Bookstore.API.Controllers
 {
@@ -240,6 +237,7 @@ namespace Bookstore.API.Controllers
         /// <param name="bookId">Id of the Book in the database.</param>
         /// <param name="book">Name of the Book in the database.</param>
         /// <returns>Returns a 400 if the model is invalid. Returns a 400 Bad Request if the id is invalid. Returns a 204 No Content if successful. Returns a 404 Not Found if the id does not already exist in the database.</returns>
+        [Authorize]
         [ResponseType(typeof(Books))]
         [HttpPut]
         [Route("edit/{bookId:int}")]
@@ -283,6 +281,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="book">A complete Book object.</param>
         /// <returns>Returns complete Book object created by POST request.</returns>
+        [Authorize]
         [ResponseType(typeof(Books))]
         [Route("create")]
         [HttpPost]
@@ -305,6 +304,7 @@ namespace Bookstore.API.Controllers
         /// Delete a Book by unique identifier.
         /// </summary>
         /// <param name="id">Unique identifier for the book, as an int.</param>
+        [Authorize]
         [Route("delete/{id:int}")]
         [ResponseType(typeof(Books))]
         [HttpDelete]

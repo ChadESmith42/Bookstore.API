@@ -1,11 +1,8 @@
 ﻿using Bookstore.API.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -62,6 +59,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <remarks>Book object and Author object should already exist before using this API POST call.</remarks>
         /// <param name="booksAuthors">BooksAuthor object contains Id, BookId, and AuthorId. Id can be anything, as the DB will assign the next available value.</param>
+        [Authorize]
         [Route("create")]
         public IHttpActionResult PostBooksAuthors([FromBody] BooksAuthors booksAuthors)
         {
@@ -97,6 +95,7 @@ namespace Bookstore.API.Controllers
         /// <param name="booksAuthorsId">Unique identifier for an existing BooksAuthors object.</param>
         /// <param name="booksAuthors">A fully qualified BooksAuthors object.</param>
         /// <returns>Returns 400 BAD REQUEST if a prerequisite object does not exist. Returns a 400 BAD REQUEST if the BooksAuthors object has a bad ModelState. Returns a 400 BAD REQUEST if the booksAuthorsId and BooksAuthors.Id do not match. Returns 200 OK, with booksAuthors object in body, if successful.</returns>
+        [Authorize]
         [Route("edit/{booksAuthorsId:int}")]
         public IHttpActionResult PutBooksAuthors(int booksAuthorsId, [FromBody] BooksAuthors booksAuthors)
         {
@@ -146,6 +145,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="booksAuthorsId">Unique identifier for the BooksAuthors object.</param>
         /// <returns>Returns 200 OK, with BooksAuthors object in the body, if successful. If the BooksAuthor object does not exist, returns 404 NOT FOUND.</returns>
+        [Authorize]
         [Route("delete/{booksAuthorsId:int}")]
         [HttpDelete]
         public IHttpActionResult DeleteBooksAuthors(int booksAuthorsId)

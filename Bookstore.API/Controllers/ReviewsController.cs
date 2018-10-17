@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -77,7 +76,7 @@ namespace Bookstore.API.Controllers
         /// <returns>Returns 200 OK with list of ReviewIds for orphaned records. If all Reviews are linked with BooksReviews, returns 204 NO CONTENT.</returns>
         [Route("orphans")]
         [HttpGet]
-        public IHttpActionResult OrphanedReviews()
+        public IHttpActionResult GetOrphanedReviews()
         {
             IEnumerable<int> reviews = db.Reviews.Select(r => r.ReviewId).ToList();
             IEnumerable<int> booksReviews = db.BooksReviews.Select(br => br.ReviewId).ToList();
@@ -99,6 +98,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="review">A complete Review object.</param>
         /// <returns>Returns 400 BAD REQUEST if the Reviews object is not valid. Returns a 201 CREATED with specifics of the object if successful.</returns>
+        [Authorize]
         [ResponseType(typeof(Reviews))]
         [Route("create")]
         public IHttpActionResult PostReview([FromBody]Reviews review)
@@ -122,6 +122,7 @@ namespace Bookstore.API.Controllers
         /// <param name="reviewId">Unique identifier of the Review in the database.</param>
         /// <param name="review">A complete Review object.</param>
         /// <returns>Returns 404 NOT FOUND for invalid reviewId parameters. Returns a 400 BAD REQUEST for invalid Review objects. Returns a 202 ACCEPTED response if successfull.</returns>
+        [Authorize]
         [Route("edit/{reviewId:int}")]
         public IHttpActionResult PutReview(int reviewId, [FromBody] Reviews review)
         {
@@ -149,6 +150,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="removeId">Unique identifier of the Reviews object to be removed.</param>
         /// <returns>Returns a 404 NOT FOUND response if the removeId parameter does not match an existing Reviewss object. Returns a 200 OK response with the details of the removed Reviews object if successful.</returns>
+        [Authorize]
         [Route("delete/{removeId:int}")]
         [ResponseType(typeof(Reviews))]
         public IHttpActionResult DeleteReview(int removeId)

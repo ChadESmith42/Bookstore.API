@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Bookstore.API.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Bookstore.API.Models;
 using System.Web.Http.Description;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 
 namespace Bookstore.API.Controllers
 {
@@ -142,6 +140,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="category">A valid Category object.</param>
         /// <returns>Returns a 201 CREATED response if successful. Returns a 400 BAD REQUEST response if Category object is not valid. Returns a 400 BAD REQUEST if the Category object already exists.</returns>
+        [Authorize]
         [Route("create")]
         [HttpPost]
         public HttpResponseMessage Post([FromBody]Categories category)
@@ -167,10 +166,11 @@ namespace Bookstore.API.Controllers
         /// <param name="categoryId">Unique identifier for the Categories Object.</param>
         /// <param name="category">Fully qualified Categories object.</param>
         /// <returns>Returns 200 OK with updated Categories object in the body. If the categoryId and category.CategoryId do not match, returns a 400 BAD REQUEST. If the Categories Object is not fully qualified, returns a 400 BAD REQUEST. If the categoryId does not exist in the database, returns a 400 BAD REQUEST.</returns>
+        [Authorize]
         [ResponseType(typeof(void))]
         [HttpPut]
         [Route("edit/{categoryId:int}")]
-        public IHttpActionResult EditCategory(int categoryId, [FromBody] Categories category)
+        public IHttpActionResult PutCategory(int categoryId, [FromBody] Categories category)
         {
             if (!CategoryExists(categoryId))
             {
@@ -192,14 +192,15 @@ namespace Bookstore.API.Controllers
 
             return Ok(category);
         }//end EditCategory()
-        
-        
+
+
         // DELETE: api/category/delete/5
         /// <summary>
         /// Delete Category Record by CategoryId.
         /// </summary>
         /// <param name="id">Unique identifier for the Category Object.</param>
         /// <returns>Returns 200 OK and removed Category object if successful. If id does not exist in the database, returns a 404 NOT FOUND.</returns>
+        [Authorize]
         [Route("delete/{categoryId:int}")]
         [HttpDelete]
         public IHttpActionResult DeleteCategory(int categoryId)

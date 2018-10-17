@@ -1,11 +1,8 @@
 ﻿using Bookstore.API.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -53,8 +50,9 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="bookReview">Full qualified BooksReviews object. Includes Books, Reviews, and Authors objects.</param>
         /// <returns>If ModelState is not valid, returns 400 BAD REQUEST. Returns 200 OK, with BooksReviews object, if successful.</returns>
+        [Authorize]
         [Route("create")]
-        public IHttpActionResult CreateBooksReviews([FromBody] BooksReviews bookReview)
+        public IHttpActionResult PostBooksReviews([FromBody] BooksReviews bookReview)
         {
             if (!ModelState.IsValid)
             {
@@ -74,6 +72,7 @@ namespace Bookstore.API.Controllers
         /// <param name="bookReviewId">Unique identifier for the BooksReviews relationships.</param>
         /// <param name="booksReview">Fully qualified BooksReviews object.</param>
         /// <returns>Returns 400 BAD REQUEST for invalid BooksReviews objects. Returns 400 BAD REQUEST if the brId and booksReview.Id do not match. Returns a 404 NOT FOUND if the brId does not match an existing BooksReview. Returns 204 NO CONTENT if PUT is successful.</returns>
+        [Authorize]
         [Route("edit/{bookreviewId}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBooksReview(int bookReviewId, [FromBody] BooksReviews booksReview)
@@ -114,6 +113,7 @@ namespace Bookstore.API.Controllers
         /// </summary>
         /// <param name="bookReviewId">Unique identifier for the BookReview object.</param>
         /// <return></return>
+        [Authorize]
         [Route("delete/{bookreviewId}")]
         public IHttpActionResult Delete(int bookReviewId)
         {

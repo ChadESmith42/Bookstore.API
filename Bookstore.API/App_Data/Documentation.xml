@@ -683,7 +683,7 @@
             <param name="bookreviewId">Unique identifier for the BookReview object.</param>
             <returns>Returns 200 OK with full Authors, Books, Reviews, and BooksReviews object. Returns 404 NOT FOUND if brId does not exist in the database.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.BooksReviewsController.CreateBooksReviews(Bookstore.API.Models.BooksReviews)">
+        <member name="M:Bookstore.API.Controllers.BooksReviewsController.PostBooksReviews(Bookstore.API.Models.BooksReviews)">
             <summary>
             Create a new BooksReview object. Request must include valid Books, Authors, and Reviews objects.
             </summary>
@@ -751,7 +751,7 @@
             <param name="category">A valid Category object.</param>
             <returns>Returns a 201 CREATED response if successful. Returns a 400 BAD REQUEST response if Category object is not valid. Returns a 400 BAD REQUEST if the Category object already exists.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.CategoriesController.EditCategory(System.Int32,Bookstore.API.Models.Categories)">
+        <member name="M:Bookstore.API.Controllers.CategoriesController.PutCategory(System.Int32,Bookstore.API.Models.Categories)">
             <summary>
             Edit a Category object by unique identifier.
             </summary>
@@ -792,7 +792,7 @@
             <param name="pubDate">Publication date of the Reviews object. Valid date formats are yyyy-mm-dd or yyyy/mm/dd.</param>
             <returns>Returns list of Reviews objects published on the query data. Returns 404 NOT FOUND if no Reviews objects were published on that date. Returns 400 BAD REQUEST if the reviewDate value is not properly formatted.</returns>
         </member>
-        <member name="M:Bookstore.API.Controllers.ReviewsController.OrphanedReviews">
+        <member name="M:Bookstore.API.Controllers.ReviewsController.GetOrphanedReviews">
             <summary>
             Get a list of Reviews objects that are not associated with any BooksReviews records.
             </summary>
